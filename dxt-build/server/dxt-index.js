@@ -11,21 +11,17 @@ process.on('unhandledRejection', (reason, promise) => {
 console.error('Starting Whippy MCP server...');
 // Simple MCP server implementation
 class SimpleMcpServer {
-    tools = new Map();
-    requestId = 0;
     constructor() {
         console.error('Creating simple MCP server...');
     }
-    registerTool(name, description, schema, handler) {
-        this.tools.set(name, { description, schema, handler });
-        console.error(`Registered tool: ${name}`);
-    }
     async handleRequest(request) {
         const { method, params, id } = request;
+        console.error(`Handling request: ${method}`);
         try {
             switch (method) {
                 case 'initialize': {
-                    return {
+                    console.error('Handling initialize request');
+                    const response = {
                         jsonrpc: '2.0',
                         id,
                         result: {
@@ -41,28 +37,34 @@ class SimpleMcpServer {
                             },
                         },
                     };
+                    console.error('Sending initialize response:', JSON.stringify(response));
+                    return response;
                 }
                 case 'tools/list': {
-                    return {
+                    console.error('Handling tools/list request');
+                    const response = {
                         jsonrpc: '2.0',
                         id,
                         result: {
-                            tools: Array.from(this.tools.entries()).map(([name, tool]) => ({
-                                name,
+                            tools: tools.map(tool => ({
+                                name: tool.name,
                                 description: tool.description,
                                 inputSchema: tool.schema,
                             })),
                         },
                     };
+                    console.error('Sending tools/list response:', JSON.stringify(response));
+                    return response;
                 }
                 case 'tools/call': {
+                    console.error('Handling tools/call request');
                     const { name, arguments: args } = params;
-                    const tool = this.tools.get(name);
+                    const tool = tools.find(t => t.name === name);
                     if (!tool) {
                         throw new Error(`Tool ${name} not found`);
                     }
                     const result = await tool.handler(args);
-                    return {
+                    const response = {
                         jsonrpc: '2.0',
                         id,
                         result: {
@@ -74,12 +76,16 @@ class SimpleMcpServer {
                             ],
                         },
                     };
+                    console.error('Sending tools/call response:', JSON.stringify(response));
+                    return response;
                 }
                 default:
+                    console.error(`Unknown method: ${method}`);
                     throw new Error(`Unknown method: ${method}`);
             }
         }
         catch (error) {
+            console.error('Error handling request:', error);
             return {
                 jsonrpc: '2.0',
                 id,
@@ -92,11 +98,6 @@ class SimpleMcpServer {
     }
     async start() {
         console.error('Starting simple MCP server...');
-        // Register all tools
-        tools.forEach((tool) => {
-            this.registerTool(tool.name, tool.description, tool.schema, tool.handler);
-        });
-        console.error('All tools registered, starting stdio communication...');
         // Handle stdin/stdout communication
         process.stdin.setEncoding('utf8');
         process.stdin.on('data', async (data) => {
@@ -104,9 +105,11 @@ class SimpleMcpServer {
                 const lines = data.toString().trim().split('\n');
                 for (const line of lines) {
                     if (line.trim()) {
+                        console.error('Received request:', line);
                         const request = JSON.parse(line);
                         const response = await this.handleRequest(request);
                         if (response) {
+                            console.error('Sending response:', JSON.stringify(response));
                             process.stdout.write(JSON.stringify(response) + '\n');
                         }
                     }

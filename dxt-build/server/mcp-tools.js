@@ -15,6 +15,7 @@ const getWhippyClient = (config) => {
 const createToolHandler = (toolFunction) => {
     return async (params, context) => {
         try {
+            // Only initialize the client when the tool is actually called
             const client = getWhippyClient(context?.config);
             const result = await toolFunction(client, params);
             if (result.success) {
