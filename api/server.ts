@@ -1,10 +1,10 @@
 import { createMcpHandler } from '@vercel/mcp-adapter';
-import { z } from 'zod';
+import { tools } from '../src/lib/mcp-tools';
 
-const handler = createMcpHandler(server => {
-  server.tool('echo', { message: z.string() }, async ({ message }) => ({
-    content: [{ type: 'text', text: `Tool echo: ${message}` }],
-  }));
+const handler = createMcpHandler(async server => {
+  tools.forEach(tool => {
+    server.tool(tool.name, tool.description, tool.schema, tool.handler);
+  });
 });
 
 export { handler as GET, handler as POST, handler as DELETE };

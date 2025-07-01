@@ -107,6 +107,38 @@
       "description": "Get analytics for a specific campaign"
     }
   ],
+  "prompts": [
+    {
+      "name": "Contact Management",
+      "description": "Manage your Whippy contacts",
+      "text": "I can help you manage contacts in Whippy. You can:\n- Create new contacts with names, emails, and phone numbers\n- Get contact details by ID\n- List all contacts with pagination\n\nWhat would you like to do with your contacts?"
+    },
+    {
+      "name": "Send Messages",
+      "description": "Send SMS and email messages",
+      "text": "I can help you send messages through Whippy:\n- Send SMS messages to phone numbers\n- Send emails with subjects and content\n\nWhat type of message would you like to send?"
+    },
+    {
+      "name": "Campaign Management",
+      "description": "Create and manage marketing campaigns",
+      "text": "I can help you manage marketing campaigns in Whippy:\n- Create new campaigns with messages\n- List all your campaigns\n- Send campaigns to your contacts\n- Get campaign analytics and performance data\n\nWhat would you like to do with your campaigns?"
+    },
+    {
+      "name": "Lead Management",
+      "description": "Track and manage leads",
+      "text": "I can help you manage leads in Whippy:\n- Create new leads with contact information\n- Track lead sources and status\n\nWould you like to create a new lead or manage existing ones?"
+    },
+    {
+      "name": "Conversation Tracking",
+      "description": "Monitor conversations and engagement",
+      "text": "I can help you track conversations in Whippy:\n- View conversation history\n- Monitor engagement with your contacts\n- Get insights into your communication effectiveness\n\nWhat would you like to know about your conversations?"
+    },
+    {
+      "name": "Analytics & Reporting",
+      "description": "Get insights into your Whippy performance",
+      "text": "I can help you analyze your Whippy performance:\n- Get campaign analytics and metrics\n- Track delivery rates and engagement\n- Monitor overall account performance\n\nWhat analytics would you like to see?"
+    }
+  ],
   "server": {
     "type": "node",
     "entry_point": "dist/dxt-index.js",
