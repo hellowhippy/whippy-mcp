@@ -56,6 +56,11 @@ cp types/*.js dist/types/ 2>/dev/null || true
 
 # Fix the import path in the compiled dxt-index.js
 sed -i '' 's|./src/lib/mcp-tools|./lib/mcp-tools|g' dist/dxt-index.js
+# Add .js extension to imports for ES modules
+sed -i '' 's|from '\''./lib/mcp-tools'\''|from '\''./lib/mcp-tools.js'\''|g' dist/dxt-index.js
+
+# Fix import statements in mcp-tools.js
+sed -i '' 's|from '\''./whippy-client'\''|from '\''./whippy-client.js'\''|g' dist/lib/mcp-tools.js
 
 # Create the DXT package
 echo "📦 Creating DXT package..."
