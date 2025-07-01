@@ -2,7 +2,7 @@
   "name": "whippy-ai-mcp-dxt",
   "version": "1.0.0",
   "description": "Whippy AI MCP Server for Claude Desktop Extensions",
-  "main": "dist/dxt-index.js",
+  "main": "server/dxt-index.js",
   "type": "module",
   "engines": {
     "node": ">=20"
