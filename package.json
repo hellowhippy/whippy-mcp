@@ -24,7 +24,7 @@
     "api",
     "vercel"
   ],
-  "author": "Your Name",
+  "author": "Jack Kennedy",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.13.2",

@@ -6,16 +6,16 @@
   "description": "Connect Claude Desktop to Whippy AI for contact management, messaging, and campaign automation",
   "long_description": "This extension provides Claude Desktop with access to Whippy AI's powerful contact management, messaging, and campaign automation features. You can create and manage contacts, send SMS and email messages, create marketing campaigns, track leads, and analyze performance - all through natural language conversations with Claude.",
   "author": {
-    "name": "Your Name",
-    "email": "your@email.com"
+    "name": "Jack Kennedy",
+    "email": "jack@whippy.co"
   },
   "license": "MIT",
   "server": {
     "type": "node",
-    "entry_point": "dxt-index.js",
+    "entry_point": "server/dxt-index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/dxt-index.js"],
+      "args": ["${__dirname}/server/dxt-index.js"],
       "env": {
         "NODE_ENV": "production",
         "WHIPPY_API_KEY": "${user_config.whippy_api_key}",

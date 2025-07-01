@@ -24,23 +24,23 @@ npx tsc --project tsconfig.json
 echo "🔨 Compiling src/dxt-index.ts..."
 npx tsc src/dxt-index.ts --target ES2022 --module ESNext --moduleResolution bundler --outDir dist --strict --esModuleInterop --skipLibCheck --forceConsistentCasingInFileNames --allowSyntheticDefaultImports --resolveJsonModule --declaration --declarationMap --sourceMap
 
-# Create the DXT build directory structure
+# Create the DXT build directory structure following official spec
 echo "📦 Creating DXT package structure..."
-mkdir -p dxt-build
-mkdir -p dxt-build/lib
+mkdir -p dxt-build/server
 mkdir -p dxt-build/types
 
-# Copy compiled type definitions to dxt-build/types
-echo "📋 Copying type definitions to dxt-build/types..."
+# Copy compiled files to server directory (following official spec)
+echo "📋 Copying compiled files to server directory..."
+cp dist/dxt-index.js dxt-build/server/
+cp dist/dxt-index.d.ts dxt-build/server/ 2>/dev/null || true
+cp dist/dxt-index.js.map dxt-build/server/ 2>/dev/null || true
+cp -r dist/lib/* dxt-build/server/
+
+# Copy type definitions to types directory
+echo "📋 Copying type definitions to types directory..."
 cp dist/types/*.d.ts dxt-build/types/ 2>/dev/null || true
 
-# Copy compiled files to DXT build
-echo "📋 Copying compiled files to dxt-build..."
-cp dist/dxt-index.js dxt-build/
-cp dist/dxt-index.d.ts dxt-build/ 2>/dev/null || true
-cp dist/dxt-index.js.map dxt-build/ 2>/dev/null || true
-cp -r dist/lib/* dxt-build/lib/
-
+# Copy manifest and package files to root
 cp manifest.json dxt-build/
 cp package.json dxt-build/
 
