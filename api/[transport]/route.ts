@@ -44,11 +44,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error creating contact: ${error.message}`
+            text: `❌ Error creating contact: ${errorMessage}`
           }]
         };
       }
@@ -81,11 +82,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error getting contact: ${error.message}`
+            text: `❌ Error getting contact: ${errorMessage}`
           }]
         };
       }
@@ -119,11 +121,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error listing contacts: ${error.message}`
+            text: `❌ Error listing contacts: ${errorMessage}`
           }]
         };
       }
@@ -159,11 +162,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error sending SMS: ${error.message}`
+            text: `❌ Error sending SMS: ${errorMessage}`
           }]
         };
       }
@@ -199,11 +203,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error sending email: ${error.message}`
+            text: `❌ Error sending email: ${errorMessage}`
           }]
         };
       }
@@ -240,11 +245,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error creating campaign: ${error.message}`
+            text: `❌ Error creating campaign: ${errorMessage}`
           }]
         };
       }
@@ -275,11 +281,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error listing campaigns: ${error.message}`
+            text: `❌ Error listing campaigns: ${errorMessage}`
           }]
         };
       }
@@ -312,11 +319,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error sending campaign: ${error.message}`
+            text: `❌ Error sending campaign: ${errorMessage}`
           }]
         };
       }
@@ -355,11 +363,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error creating lead: ${error.message}`
+            text: `❌ Error creating lead: ${errorMessage}`
           }]
         };
       }
@@ -391,11 +400,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error listing conversations: ${error.message}`
+            text: `❌ Error listing conversations: ${errorMessage}`
           }]
         };
       }
@@ -428,11 +438,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error getting conversation: ${error.message}`
+            text: `❌ Error getting conversation: ${errorMessage}`
           }]
         };
       }
@@ -466,11 +477,12 @@ const handler = createMcpHandler(async (server) => {
             }]
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return {
           content: [{
             type: 'text',
-            text: `❌ Error getting campaign analytics: ${error.message}`
+            text: `❌ Error getting campaign analytics: ${errorMessage}`
           }]
         };
       }
