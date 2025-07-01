@@ -9,6 +9,8 @@ mkdir -p dxt-build
 
 # Copy necessary files
 cp dxt-index.ts dxt-build/
+# Rewrite import path in copied dxt-index.ts for DXT build
+sed -i '' 's|./src/lib/mcp-tools|./lib/mcp-tools|g' dxt-build/dxt-index.ts
 mkdir -p dxt-build/lib
 cp src/lib/whippy-client.ts dxt-build/lib/
 cp src/lib/mcp-tools.ts dxt-build/lib/
