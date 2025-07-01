@@ -49,8 +49,8 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 1. **Clone the repository**:
 
    ```bash
-   git clone <your-repo-url>
-   cd whippy-ai-mcp-server
+   git clone https://github.com/hellowhippy/whippy-mcp.git
+   cd whippy-mcp
    ```
 
 2. **Install dependencies**:
@@ -81,7 +81,7 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 
 ### One-Click Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/whippy-ai-mcp-server)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/hellowhippy/whippy-mcp)
 
 ### Manual Deployment
 
