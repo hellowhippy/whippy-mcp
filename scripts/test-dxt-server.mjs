@@ -25,6 +25,65 @@ const server = spawn(nodePath, [serverPath], {
   },
 });
 
+let serverOutput = '';
+let serverError = '';
+let serverStarted = false;
+let testPassed = false;
+
+// Collect stdout
+server.stdout.on('data', data => {
+  const output = data.toString();
+  serverOutput += output;
+  console.log(`📤 Server output: ${output.trim()}`);
+
+  // Check if we got a proper MCP initialization response
+  if (
+    output.includes('"protocolVersion":"2024-11-05"') &&
+    output.includes('"serverInfo":{"name":"whippy-ai-mcp-dxt"')
+  ) {
+    testPassed = true;
+    console.log('✅ Server responded with proper MCP initialization!');
+
+    // Give the server a moment to fully start, then exit gracefully
+    setTimeout(() => {
+      console.log('✅ Test PASSED - Server is working correctly!');
+      server.kill('SIGTERM');
+      process.exit(0);
+    }, 1000);
+  }
+});
+
+// Collect stderr
+server.stderr.on('data', data => {
+  const error = data.toString();
+  serverError += error;
+  console.log(`⚠️  Server stderr: ${error.trim()}`);
+
+  // Check if server has started successfully
+  if (error.includes('Whippy MCP server started and connected via stdio')) {
+    serverStarted = true;
+    console.log('✅ Server started and connected successfully!');
+  }
+});
+
+// Handle server exit
+server.on('close', code => {
+  console.log(`🔍 Server exited with code: ${code}`);
+
+  if (testPassed) {
+    console.log('✅ Test PASSED - Server worked correctly and exited gracefully');
+    process.exit(0);
+  } else if (code === 0) {
+    console.log('✅ Test PASSED - Server exited cleanly');
+    process.exit(0);
+  } else {
+    console.log('❌ Test FAILED - Server exited with error');
+    console.log(`📋 Full stdout: ${serverOutput}`);
+    console.log(`❌ Full stderr: ${serverError}`);
+    process.exit(1);
+  }
+});
+
 // Send initialization message
 const initMessage = {
   jsonrpc: '2.0',
@@ -40,35 +99,23 @@ const initMessage = {
   },
 };
 
+console.log('📤 Sending initialization message...');
 server.stdin.write(JSON.stringify(initMessage) + '\n');
 
-let output = '';
-let errorOutput = '';
-
-server.stdout.on('data', data => {
-  output += data.toString();
-  console.log('📤 Server output:', data.toString().trim());
-});
-
-server.stderr.on('data', data => {
-  errorOutput += data.toString();
-  console.log('⚠️  Server stderr:', data.toString().trim());
-});
-
-server.on('close', code => {
-  console.log(`\n🔍 Server exited with code: ${code}`);
-  console.log('📋 Full stdout:', output);
-  console.log('❌ Full stderr:', errorOutput);
-
-  if (code === 0) {
-    console.log('✅ Server test completed successfully');
-  } else {
-    console.log('❌ Server test failed');
-  }
-});
-
-// Set a timeout to kill the server if it doesn't respond
+// Fallback timeout - if server doesn't respond within 15 seconds, consider it a failure
 setTimeout(() => {
-  console.log('⏰ Test timeout reached, killing server...');
-  server.kill();
-}, 10000);
+  if (!testPassed) {
+    console.log('⏰ Test timeout reached, killing server...');
+    server.kill('SIGTERM');
+
+    if (serverStarted) {
+      console.log("⚠️  Server started but didn't respond to initialization");
+    } else {
+      console.log('❌ Server failed to start properly');
+    }
+
+    console.log(`📋 Full stdout: ${serverOutput}`);
+    console.log(`❌ Full stderr: ${serverError}`);
+    process.exit(1);
+  }
+}, 15000);

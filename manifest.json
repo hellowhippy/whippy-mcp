@@ -1,41 +1,39 @@
 {
+  "dxt_version": "0.1",
   "name": "whippy-ai-mcp-dxt",
+  "display_name": "Whippy AI MCP Extension",
   "version": "1.0.0",
-  "description": "Whippy AI MCP Server for Claude Desktop Extensions",
-  "dxt_version": "1",
+  "description": "Connect Claude Desktop to Whippy AI for contact management, messaging, and campaign automation",
+  "long_description": "This extension provides Claude Desktop with access to Whippy AI's powerful contact management, messaging, and campaign automation features. You can create and manage contacts, send SMS and email messages, create marketing campaigns, track leads, and analyze performance - all through natural language conversations with Claude.",
   "author": {
     "name": "Your Name",
     "email": "your@email.com"
   },
   "license": "MIT",
-  "main": "dist/dxt-index.js",
-  "type": "module",
-  "engines": {
-    "node": ">=20.0.0"
+  "server": {
+    "type": "node",
+    "entry_point": "dist/dxt-index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/dxt-index.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "WHIPPY_API_KEY": "${user_config.whippy_api_key}",
+        "WHIPPY_BASE_URL": "${user_config.whippy_base_url}"
+      }
+    }
   },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.13.2",
-    "@vercel/mcp-adapter": "^0.11.1",
-    "axios": "^1.6.0",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "typescript": "^5.0.0"
-  },
-  "scripts": {
-    "build": "tsc && cp src/lib/whippy-client.ts src/lib/whippy-client.js",
-    "start": "node dxt-index.js"
-  },
-  "configuration": {
+  "user_config": {
     "whippy_api_key": {
       "type": "string",
-      "description": "Your Whippy AI API key",
+      "title": "Whippy API Key",
+      "description": "Your Whippy AI API key for authentication",
       "sensitive": true,
       "required": true
     },
     "whippy_base_url": {
       "type": "string",
+      "title": "Whippy Base URL",
       "description": "Whippy AI API base URL (optional)",
       "default": "https://api.whippy.co/v1",
       "required": false
@@ -77,18 +75,6 @@
     {
       "name": "send_campaign",
       "description": "Send a campaign via Whippy"
-    },
-    {
-      "name": "create_sequence",
-      "description": "Create a new sequence in Whippy"
-    },
-    {
-      "name": "get_sequence",
-      "description": "Get a sequence by ID from Whippy"
-    },
-    {
-      "name": "list_sequences",
-      "description": "List all sequences from Whippy"
     },
     {
       "name": "create_lead",
@@ -139,16 +125,12 @@
       "text": "I can help you analyze your Whippy performance:\n- Get campaign analytics and metrics\n- Track delivery rates and engagement\n- Monitor overall account performance\n\nWhat analytics would you like to see?"
     }
   ],
-  "server": {
-    "type": "node",
-    "entry_point": "dist/dxt-index.js",
-    "mcp_config": {
-      "transport": "stdio",
-      "command": "node",
-      "args": ["dist/dxt-index.js"],
-      "env": {
-        "NODE_ENV": "production"
-      }
+  "compatibility": {
+    "claude_desktop": ">=1.0.0",
+    "platforms": ["darwin", "win32"],
+    "runtimes": {
+      "node": ">=20.0.0"
     }
-  }
+  },
+  "keywords": ["whippy", "crm", "messaging", "automation", "contacts", "campaigns"]
 } 

@@ -1,75 +1,61 @@
 #!/bin/bash
 
 # Build script for Whippy AI MCP Desktop Extension
+# Following the official DXT specification
+
+set -e
 
 echo "🚀 Building Whippy AI MCP Desktop Extension..."
 
-# Create DXT build directory
+# Clean previous builds
+echo "📁 Cleaning previous builds..."
+rm -rf dist/
+rm -rf dxt-build/
+rm -f whippy-ai-mcp.dxt
+
+# Create dist directory
+mkdir -p dist
+
+# Build TypeScript for src files
+echo "🔨 Building TypeScript for src files..."
+npx tsc --project tsconfig.json
+
+# Compile dxt-index.ts separately
+echo "🔨 Compiling dxt-index.ts..."
+npx tsc dxt-index.ts --target ES2022 --module ESNext --moduleResolution bundler --outDir dist --strict --esModuleInterop --skipLibCheck --forceConsistentCasingInFileNames --allowSyntheticDefaultImports --resolveJsonModule --declaration --declarationMap --sourceMap
+
+# Copy necessary files to dist
+echo "📋 Copying files to dist..."
+cp -r src/lib dist/
+cp -r src/types dist/
+
+# Create the DXT build directory structure
+echo "📦 Creating DXT package structure..."
 mkdir -p dxt-build
-
-# Copy necessary files
-cp dxt-index.ts dxt-build/
-# Rewrite import path in copied dxt-index.ts for DXT build
-sed -i '' 's|./src/lib/mcp-tools|./lib/mcp-tools|g' dxt-build/dxt-index.ts
-mkdir -p dxt-build/lib
-cp src/lib/whippy-client.ts dxt-build/lib/
-cp src/lib/mcp-tools.ts dxt-build/lib/
-mkdir -p dxt-build/types
-cp src/types/whippy.ts dxt-build/types/
-cp dxt-package.json dxt-build/package.json
+cp -r dist/* dxt-build/
 cp manifest.json dxt-build/
-# Create DXT-specific tsconfig
-cat > dxt-build/tsconfig.json << 'EOF'
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
-  },
-  "include": ["*.ts", "lib/**/*", "types/**/*"],
-  "exclude": ["node_modules", "dist"]
-}
-EOF
+cp package.json dxt-build/
 
-# Install dependencies in build directory
+# Install production dependencies in dxt-build
+echo "📦 Installing dependencies..."
 cd dxt-build
-npm install --production
+npm install --production --no-optional
+cd ..
 
-# Compile TypeScript to JavaScript
-npx tsc --outDir dist
+# Create the .dxt file (ZIP archive)
+echo "🗜️  Creating .dxt file..."
+cd dxt-build
+zip -r ../whippy-ai-mcp.dxt . -x "*.DS_Store" "node_modules/.cache/*"
+cd ..
 
-# Copy compiled files to the correct structure for DXT
-mkdir -p dist/lib
-mkdir -p dist/types
-cp lib/*.js dist/lib/ 2>/dev/null || true
-cp types/*.js dist/types/ 2>/dev/null || true
-
-# Fix the import path in the compiled dxt-index.js
-sed -i '' 's|./src/lib/mcp-tools|./lib/mcp-tools|g' dist/dxt-index.js
-# Add .js extension to imports for ES modules
-sed -i '' 's|from '\''./lib/mcp-tools'\''|from '\''./lib/mcp-tools.js'\''|g' dist/dxt-index.js
-
-# Fix import statements in mcp-tools.js
-sed -i '' 's|from '\''./whippy-client'\''|from '\''./whippy-client.js'\''|g' dist/lib/mcp-tools.js
-
-# Create the DXT package
-echo "📦 Creating DXT package..."
-npx @anthropic-ai/dxt pack . ../whippy-ai-mcp.dxt
-
-echo "✅ DXT package created: whippy-ai-mcp.dxt"
-echo "📋 To install:"
-echo "   1. Open Claude Desktop"
-echo "   2. Go to Settings > Extensions"
-echo "   3. Click 'Install from file'"
-echo "   4. Select whippy-ai-mcp.dxt"
-echo "   5. Configure your Whippy API key" 
+echo "✅ Build complete! Extension created: whippy-ai-mcp.dxt"
+echo ""
+echo "📋 To install in Claude Desktop:"
+echo "1. Open Claude Desktop"
+echo "2. Go to Settings > Extensions"
+echo "3. Drag and drop whippy-ai-mcp.dxt"
+echo "4. Click 'Install'"
+echo "5. Configure your Whippy API key"
+echo ""
+echo "🧪 To test locally:"
+echo "node scripts/test-dxt-server.mjs" 
