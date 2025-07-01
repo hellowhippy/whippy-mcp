@@ -50,21 +50,21 @@ This document summarizes the comprehensive development tooling and CI/CD pipelin
 ### Quality Assurance Scripts
 
 ```bash
-npm run lint           # Fix linting issues automatically
-npm run lint:check     # Check linting without fixing
-npm run format         # Format code with Prettier
-npm run format:check   # Check formatting without fixing
-npm run lint:spell     # Check spelling with CSpell
-npm run type           # TypeScript type checking
-npm run ci             # Run all quality checks
+yarn lint           # Fix linting issues automatically
+yarn lint:check     # Check linting without fixing
+yarn format         # Format code with Prettier
+yarn format:check   # Check formatting without fixing
+yarn lint:spell     # Check spelling with CSpell
+yarn type           # TypeScript type checking
+yarn ci             # Run all quality checks
 ```
 
 ### Development Scripts
 
 ```bash
-npm run build          # Build the project
-npm run dev            # Start development server
-npm run start          # Start production server
+yarn build          # Build the project
+yarn dev            # Start development server
+yarn start          # Start production server
 ```
 
 ## 🔄 CI/CD Pipeline
@@ -81,11 +81,11 @@ npm run start          # Start production server
 - ✅ Checkout code
 - ✅ Setup Node.js (18.x, 20.x matrix)
 - ✅ Install dependencies
-- ✅ Type checking (`npm run type`)
-- ✅ Linting (`npm run lint:check`)
-- ✅ Format checking (`npm run format:check`)
-- ✅ Spell checking (`npm run lint:spell`)
-- ✅ Build project (`npm run build`)
+- ✅ Type checking (`yarn type`)
+- ✅ Linting (`yarn lint:check`)
+- ✅ Format checking (`yarn format:check`)
+- ✅ Spell checking (`yarn lint:spell`)
+- ✅ Build project (`yarn build`)
 - ✅ Upload build artifacts
 
 #### 2. **Deploy Preview Job** (Pull Requests)
@@ -112,15 +112,15 @@ npm run start          # Start production server
 
 ### Pre-commit Checklist
 
-1. **Fix Issues**: `npm run lint && npm run format`
-2. **Verify Quality**: `npm run ci`
+1. **Fix Issues**: `yarn lint && yarn format`
+2. **Verify Quality**: `yarn ci`
 3. **Commit Changes**: `git commit -m "descriptive message"`
 
 ### Pull Request Process
 
 1. Create feature branch
 2. Make changes
-3. Run `npm run ci` to ensure quality
+3. Run `yarn ci` to ensure quality
 4. Push to GitHub
 5. GitHub Actions automatically runs CI pipeline
 6. Preview deployment created for testing

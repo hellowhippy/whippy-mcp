@@ -42,7 +42,7 @@ Before starting the deployment process, ensure you have:
 1. **Install dependencies**:
 
    ```bash
-   npm install
+   yarn install
    ```
 
 2. **Create environment file**:
@@ -60,8 +60,8 @@ Before starting the deployment process, ensure you have:
 
 4. **Test locally** (optional):
    ```bash
-   npm run build
-   npm run dev
+   yarn build
+   yarn dev
    ```
 
 ## ☁️ Step 3: Vercel Deployment

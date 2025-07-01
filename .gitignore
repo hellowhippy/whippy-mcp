@@ -5,6 +5,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Yarn
+.yarn/
+.yarnrc.yml
+# Note: yarn.lock should be committed to version control
+
 # Environment variables
 .env
 .env.local

@@ -56,7 +56,7 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 2. **Install dependencies**:
 
    ```bash
-   npm install
+   yarn install
    ```
 
 3. **Set up environment variables**:
@@ -69,12 +69,12 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 4. **Build the project**:
 
    ```bash
-   npm run build
+   yarn build
    ```
 
 5. **Test locally**:
    ```bash
-   npm run dev
+   yarn dev
    ```
 
 ## 🚀 Deployment on Vercel
@@ -271,21 +271,21 @@ whippy-ai-mcp-server/
 
 ```bash
 # Type checking
-npm run type              # Check TypeScript types
-npm run build            # Build the project
+yarn type              # Check TypeScript types
+yarn build            # Build the project
 
 # Code quality
-npm run lint             # Fix linting issues automatically
-npm run lint:check       # Check linting without fixing
-npm run format           # Format code with Prettier
-npm run format:check     # Check formatting without fixing
-npm run lint:spell       # Check spelling with CSpell
+yarn lint             # Fix linting issues automatically
+yarn lint:check       # Check linting without fixing
+yarn format           # Format code with Prettier
+yarn format:check     # Check formatting without fixing
+yarn lint:spell       # Check spelling with CSpell
 
 # CI pipeline
-npm run ci               # Run all checks (type, lint, format, spell)
+yarn ci               # Run all checks (type, lint, format, spell)
 
 # Development
-npm run dev              # Start development server
+yarn dev              # Start development server
 ```
 
 ### Code Quality Tools
@@ -312,7 +312,7 @@ The project includes a comprehensive CI/CD pipeline that:
 1. **Add new types** in `src/types/whippy.ts`
 2. **Extend the client** in `src/lib/whippy-client.ts`
 3. **Add new tools** in `api/[transport]/route.ts`
-4. **Run quality checks**: `npm run ci`
+4. **Run quality checks**: `yarn ci`
 5. **Test thoroughly** before deployment
 
 ### Pre-commit Workflow
@@ -321,11 +321,11 @@ Before committing code, run:
 
 ```bash
 # Fix any issues automatically
-npm run lint
-npm run format
+yarn lint
+yarn format
 
 # Verify everything passes
-npm run ci
+yarn ci
 ```
 
 ## 🐛 Troubleshooting
