@@ -1,6 +1,6 @@
 import { createMcpHandler } from '@vercel/mcp-adapter';
 import { z } from 'zod';
-import { WhippyClient } from '../../src/lib/whippy-client.js';
+import { WhippyClient } from '../../src/lib/whippy-client';
 
 // Initialize Whippy client - API key should be set in environment variables
 const getWhippyClient = () => {
