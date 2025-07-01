@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { WhippyClient } from './whippy-client';
+import { WhippyClient } from './whippy-client.js';
 // Initialize Whippy client with configuration
 const getWhippyClient = (config) => {
     const api_key = config?.whippy_api_key || process.env.WHIPPY_API_KEY;

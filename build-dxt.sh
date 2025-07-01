@@ -30,13 +30,16 @@ mkdir -p dxt-build
 mkdir -p dxt-build/lib
 mkdir -p dxt-build/types
 
+# Copy compiled type definitions to dxt-build/types
+echo "📋 Copying type definitions to dxt-build/types..."
+cp dist/types/*.d.ts dxt-build/types/ 2>/dev/null || true
+
 # Copy compiled files to DXT build
 echo "📋 Copying compiled files to dxt-build..."
 cp dist/dxt-index.js dxt-build/
 cp dist/dxt-index.d.ts dxt-build/ 2>/dev/null || true
 cp dist/dxt-index.js.map dxt-build/ 2>/dev/null || true
 cp -r dist/lib/* dxt-build/lib/
-cp -r dist/types/* dxt-build/types/
 
 cp manifest.json dxt-build/
 cp package.json dxt-build/

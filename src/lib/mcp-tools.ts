@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { WhippyClient } from './whippy-client';
+import { WhippyClient } from './whippy-client.js';
 
 // Initialize Whippy client with configuration
 const getWhippyClient = (config: any) => {

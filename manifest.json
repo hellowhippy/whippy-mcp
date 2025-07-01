@@ -125,12 +125,10 @@
       "text": "I can help you analyze your Whippy performance:\n- Get campaign analytics and metrics\n- Track delivery rates and engagement\n- Monitor overall account performance\n\nWhat analytics would you like to see?"
     }
   ],
-  "compatibility": {
+  "keywords": ["whippy", "crm", "messaging", "automation", "contacts", "campaigns"],
+  "requirements": {
     "claude_desktop": ">=1.0.0",
-    "platforms": ["darwin", "win32"],
-    "runtimes": {
-      "node": ">=20.0.0"
-    }
-  },
-  "keywords": ["whippy", "crm", "messaging", "automation", "contacts", "campaigns"]
+    "node": ">=20.0.0",
+    "os": "macos"
+  }
 } 
