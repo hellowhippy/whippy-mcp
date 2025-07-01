@@ -201,18 +201,18 @@ Create a new lead with name Sarah Johnson, email sarah@example.com, source "webs
 
 | Tool                     | Description                        | Parameters                                            |
 | ------------------------ | ---------------------------------- | ----------------------------------------------------- |
-| `create_contact`         | Create a new contact               | firstName, lastName, email, phone, tags, customFields |
-| `get_contact`            | Get contact by ID                  | contactId                                             |
-| `list_contacts`          | List contacts with pagination      | page, limit                                           |
+| `create_contact`         | Create a new contact               | name, email, phone                                    |
+| `get_contact`            | Get contact by ID                  | contact_id                                            |
+| `list_contacts`          | List contacts with pagination      | offset, limit                                         |
 | `send_sms`               | Send SMS message                   | to, message, from                                     |
 | `send_email`             | Send email                         | to, subject, message, from                            |
-| `create_campaign`        | Create new campaign                | name, message, contactIds, scheduledAt                |
+| `create_campaign`        | Create new campaign                | name, message, contact_ids, scheduled_at              |
 | `list_campaigns`         | List all campaigns                 | -                                                     |
-| `send_campaign`          | Send campaign immediately          | campaignId                                            |
-| `create_lead`            | Create new lead                    | firstName, lastName, email, phone, source, status     |
-| `list_conversations`     | List conversations with pagination | page, limit                                           |
-| `get_conversation`       | Get conversation by ID             | conversationId                                        |
-| `get_campaign_analytics` | Get campaign analytics             | campaignId                                            |
+| `send_campaign`          | Send campaign immediately          | campaign_id                                           |
+| `create_lead`            | Create new lead                    | name, email, phone, source, status                    |
+| `list_conversations`     | List conversations with pagination | offset, limit                                         |
+| `get_conversation`       | Get conversation by ID             | conversation_id                                       |
+| `get_campaign_analytics` | Get campaign analytics             | campaign_id                                           |
 
 ## 🔒 Security
 

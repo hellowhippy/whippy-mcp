@@ -1,25 +1,22 @@
 // Whippy AI API Types
 export interface WhippyConfig {
-  apiKey: string;
-  baseUrl?: string;
+  api_key: string;
+  base_url?: string;
 }
 
 export interface Contact {
   id?: string;
-  firstName?: string;
-  lastName?: string;
+  name?: string;
   email?: string;
   phone?: string;
-  tags?: string[];
-  customFields?: Record<string, any>;
 }
 
 export interface Campaign {
   id?: string;
   name: string;
   message: string;
-  contactIds?: string[];
-  scheduledAt?: string;
+  contact_ids?: string[];
+  scheduled_at?: string;
   status?: 'draft' | 'scheduled' | 'sent' | 'failed';
 }
 
@@ -28,7 +25,8 @@ export interface Message {
   to: string;
   from?: string;
   message: string;
-  type: 'sms' | 'email';
+  source_type: 'INBOUND' | 'OUTBOUND' | 'NOTE';
+  type: 'sms' | 'email' | 'call' | 'note' | 'whatsapp';
   status?: 'sent' | 'delivered' | 'failed';
   sentAt?: string;
 }
@@ -37,34 +35,31 @@ export interface Sequence {
   id?: string;
   name: string;
   steps: SequenceStep[];
-  isActive?: boolean;
 }
 
 export interface SequenceStep {
   id?: string;
-  stepNumber: number;
+  step_number: number;
   message: string;
-  delayInHours?: number;
   type: 'sms' | 'email';
 }
 
 export interface Lead {
   id?: string;
-  firstName?: string;
-  lastName?: string;
+  name?: string;
   email?: string;
   phone?: string;
   source?: string;
   status?: string;
-  createdAt?: string;
+  created_at?: string;
 }
 
 export interface Conversation {
   id?: string;
-  contactId: string;
+  contact_id: string;
   messages: Message[];
   status?: 'open' | 'closed';
-  lastMessageAt?: string;
+  last_message_at?: string;
 }
 
 export interface WhippyApiResponse<T = any> {
@@ -74,22 +69,24 @@ export interface WhippyApiResponse<T = any> {
   message?: string;
 }
 
+export interface WhippyApiError {
+  errors: Array<{
+    description: string;
+  }>;
+  status: number;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
+  total: number;
 }
 
 export interface Analytics {
-  campaignId?: string;
-  messagesSent: number;
-  messagesDelivered: number;
-  messagesFailed: number;
-  openRate?: number;
-  clickRate?: number;
-  responseRate?: number;
+  campaign_id?: string;
+  messages_sent: number;
+  messages_delivered: number;
+  messages_failed: number;
+  open_rate?: number;
+  click_rate?: number;
+  response_rate?: number;
 }

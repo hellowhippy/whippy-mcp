@@ -1,6 +1,6 @@
 import { createMcpHandler } from '@vercel/mcp-adapter';
 import { z } from 'zod';
-import { WhippyClient } from '../../src/lib/whippy-client';
+import { WhippyClient } from './lib/whippy-client';
 
 // Initialize Whippy client - API key should be set in environment variables
 const getWhippyClient = () => {
@@ -207,7 +207,7 @@ const handler = createMcpHandler(async server => {
       to: z.string().email().describe('Email address to send to'),
       subject: z.string().describe('Email subject'),
       message: z.string().describe('Email message content'),
-      from: z.string().email().optional().describe('Sender email address (optional)'),
+      from: z.string().email().optional().describe('Sender email (optional)'),
     },
     async ({ to, subject, message, from }) => {
       try {
@@ -253,14 +253,14 @@ const handler = createMcpHandler(async server => {
     'Create a new campaign in Whippy',
     {
       name: z.string().describe('Campaign name'),
-      message: z.string().describe('Campaign message content'),
+      message: z.string().describe('Campaign message'),
       contact_ids: z.array(z.string()).optional().describe('Array of contact IDs to target'),
-      scheduled_at: z.string().optional().describe('Schedule campaign for later (ISO date string)'),
+      scheduled_at: z.string().optional().describe('Scheduled date (ISO string)'),
     },
-    async params => {
+    async ({ name, message, contact_ids, scheduled_at }) => {
       try {
         const client = getWhippyClient();
-        const result = await client.createCampaign(params);
+        const result = await client.createCampaign({ name, message, contact_ids, scheduled_at });
 
         if (result.success) {
           return {
@@ -305,7 +305,7 @@ const handler = createMcpHandler(async server => {
           content: [
             {
               type: 'text',
-              text: `🚀 Campaigns:\n${JSON.stringify(result.data, null, 2)}`,
+              text: `📊 Campaigns:\n${JSON.stringify(result.data, null, 2)}`,
             },
           ],
         };
@@ -334,7 +334,7 @@ const handler = createMcpHandler(async server => {
 
   server.tool(
     'send_campaign',
-    'Send a campaign immediately via Whippy',
+    'Send a campaign immediately',
     {
       campaign_id: z.string().describe('The ID of the campaign to send'),
     },
@@ -348,7 +348,7 @@ const handler = createMcpHandler(async server => {
             content: [
               {
                 type: 'text',
-                text: `🚀 Campaign sent successfully!${result.message ? ` ${result.message}` : ''}`,
+                text: `🚀 Campaign sent successfully!\n${JSON.stringify(result.data, null, 2)}`,
               },
             ],
           };
@@ -384,8 +384,8 @@ const handler = createMcpHandler(async server => {
       name: z.string().optional(),
       email: z.string().email().optional(),
       phone: z.string().optional(),
-      source: z.string().optional().describe('Lead source'),
-      status: z.string().optional().describe('Lead status'),
+      source: z.string().optional().describe('Lead source (e.g., website, referral)'),
+      status: z.string().optional().describe('Lead status (e.g., new, qualified, converted)'),
     },
     async params => {
       try {
@@ -425,105 +425,10 @@ const handler = createMcpHandler(async server => {
     }
   );
 
-  // Conversation Management Tools
-  server.tool(
-    'list_conversations',
-    'List conversations from Whippy with pagination',
-    {
-      offset: z.number().min(0).default(0).describe('Starting point for pagination (0-based)'),
-      limit: z
-        .number()
-        .min(1)
-        .max(100)
-        .default(50)
-        .describe('Maximum number of conversations to return'),
-    },
-    async ({ offset, limit }) => {
-      try {
-        const client = getWhippyClient();
-        const result = await client.listConversations(offset, limit);
-
-        if (result.success) {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: `💬 Conversations (Offset: ${offset}, Limit: ${limit}):\n${JSON.stringify(result.data, null, 2)}`,
-              },
-            ],
-          };
-        } else {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: `❌ Failed to list conversations: ${result.error}`,
-              },
-            ],
-          };
-        }
-      } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `❌ Error listing conversations: ${errorMessage}`,
-            },
-          ],
-        };
-      }
-    }
-  );
-
-  server.tool(
-    'get_conversation',
-    'Get a specific conversation by ID from Whippy',
-    {
-      conversationId: z.string().describe('The ID of the conversation to retrieve'),
-    },
-    async ({ conversationId }) => {
-      try {
-        const client = getWhippyClient();
-        const result = await client.getConversation(conversationId);
-
-        if (result.success) {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: `💬 Conversation Details:\n${JSON.stringify(result.data, null, 2)}`,
-              },
-            ],
-          };
-        } else {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: `❌ Failed to get conversation: ${result.error}`,
-              },
-            ],
-          };
-        }
-      } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `❌ Error getting conversation: ${errorMessage}`,
-            },
-          ],
-        };
-      }
-    }
-  );
-
   // Analytics Tools
   server.tool(
     'get_campaign_analytics',
-    'Get analytics for a specific campaign from Whippy',
+    'Get analytics for a specific campaign',
     {
       campaign_id: z.string().describe('The ID of the campaign to get analytics for'),
     },
@@ -566,4 +471,49 @@ const handler = createMcpHandler(async server => {
   );
 });
 
-export { handler as GET, handler as POST, handler as DELETE };
+// For development, we can start a simple HTTP server
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const port = process.env.PORT || 3000;
+  console.log(`Starting Whippy MCP development server on port ${port}`);
+
+  // Simple HTTP server for development
+  const http = await import('http');
+  const server = http.createServer(async (req, res) => {
+    if (req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      req.on('end', async () => {
+        try {
+          // Create a mock Next.js request object
+          const mockReq = {
+            method: req.method,
+            url: req.url,
+            headers: req.headers,
+            body: JSON.parse(body || '{}'),
+          } as any;
+
+          const result = await handler(mockReq);
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(result));
+        } catch (error) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: (error as Error).message }));
+        }
+      });
+    } else {
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end(
+        'Whippy MCP Server - Development Mode\n\nAvailable tools:\n- create_contact\n- get_contact\n- list_contacts\n- send_sms\n- send_email\n- create_campaign\n- list_campaigns\n- send_campaign\n- create_lead\n- get_campaign_analytics'
+      );
+    }
+  });
+
+  server.listen(port, () => {
+    console.log(`Whippy MCP Server running at http://localhost:${port}`);
+    console.log('Make sure to set WHIPPY_API_KEY environment variable');
+  });
+}
+
+export { handler };

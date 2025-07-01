@@ -8,21 +8,22 @@ import {
   Lead,
   Conversation,
   WhippyApiResponse,
+  WhippyApiError,
   PaginatedResponse,
   Analytics,
 } from '../types/whippy';
 
 export class WhippyClient {
   private client: AxiosInstance;
-  private apiKey: string;
+  private api_key: string;
 
   constructor(config: WhippyConfig) {
-    this.apiKey = config.apiKey;
+    this.api_key = config.api_key;
 
     this.client = axios.create({
-      baseURL: config.baseUrl || 'https://api.whippy.co/v1',
+      baseURL: config.base_url || 'https://api.whippy.co/v1',
       headers: {
-        Authorization: `Bearer ${this.apiKey}`,
+        'X-WHIPPY-KEY': this.api_key,
         'Content-Type': 'application/json',
         'User-Agent': 'Whippy-MCP-Server/1.0.0',
       },
@@ -33,7 +34,17 @@ export class WhippyClient {
     this.client.interceptors.response.use(
       response => response,
       error => {
-        console.error('Whippy API Error:', error.response?.data || error.message);
+        const errorData = error.response?.data as WhippyApiError;
+        if (errorData?.errors && errorData.errors.length > 0) {
+          console.error(
+            'Whippy API Error:',
+            errorData.errors[0].description,
+            'Status:',
+            errorData.status
+          );
+        } else {
+          console.error('Whippy API Error:', error.response?.data || error.message);
+        }
         throw error;
       }
     );
@@ -45,26 +56,30 @@ export class WhippyClient {
       const response: AxiosResponse = await this.client.post('/contacts', contact);
       return { success: true, data: response.data };
     } catch (error: any) {
-      return { success: false, error: error.message };
+      const errorData = error.response?.data as WhippyApiError;
+      const errorMessage = errorData?.errors?.[0]?.description || error.message;
+      return { success: false, error: errorMessage };
     }
   }
 
-  async getContact(contactId: string): Promise<WhippyApiResponse<Contact>> {
+  async getContact(contact_id: string): Promise<WhippyApiResponse<Contact>> {
     try {
-      const response: AxiosResponse = await this.client.get(`/contacts/${contactId}`);
+      const response: AxiosResponse = await this.client.get(`/contacts/${contact_id}`);
       return { success: true, data: response.data };
     } catch (error: any) {
-      return { success: false, error: error.message };
+      const errorData = error.response?.data as WhippyApiError;
+      const errorMessage = errorData?.errors?.[0]?.description || error.message;
+      return { success: false, error: errorMessage };
     }
   }
 
   async listContacts(
-    page: number = 1,
+    offset: number = 0,
     limit: number = 50
   ): Promise<WhippyApiResponse<PaginatedResponse<Contact>>> {
     try {
       const response: AxiosResponse = await this.client.get('/contacts', {
-        params: { page, limit },
+        params: { offset, limit },
       });
       return { success: true, data: response.data };
     } catch (error: any) {
@@ -73,20 +88,20 @@ export class WhippyClient {
   }
 
   async updateContact(
-    contactId: string,
+    contact_id: string,
     contact: Partial<Contact>
   ): Promise<WhippyApiResponse<Contact>> {
     try {
-      const response: AxiosResponse = await this.client.put(`/contacts/${contactId}`, contact);
+      const response: AxiosResponse = await this.client.put(`/contacts/${contact_id}`, contact);
       return { success: true, data: response.data };
     } catch (error: any) {
       return { success: false, error: error.message };
     }
   }
 
-  async deleteContact(contactId: string): Promise<WhippyApiResponse<void>> {
+  async deleteContact(contact_id: string): Promise<WhippyApiResponse<void>> {
     try {
-      await this.client.delete(`/contacts/${contactId}`);
+      await this.client.delete(`/contacts/${contact_id}`);
       return { success: true, message: 'Contact deleted successfully' };
     } catch (error: any) {
       return { success: false, error: error.message };
@@ -103,9 +118,9 @@ export class WhippyClient {
     }
   }
 
-  async getCampaign(campaignId: string): Promise<WhippyApiResponse<Campaign>> {
+  async getCampaign(campaign_id: string): Promise<WhippyApiResponse<Campaign>> {
     try {
-      const response: AxiosResponse = await this.client.get(`/campaigns/${campaignId}`);
+      const response: AxiosResponse = await this.client.get(`/campaigns/${campaign_id}`);
       return { success: true, data: response.data };
     } catch (error: any) {
       return { success: false, error: error.message };
@@ -121,9 +136,9 @@ export class WhippyClient {
     }
   }
 
-  async sendCampaign(campaignId: string): Promise<WhippyApiResponse<void>> {
+  async sendCampaign(campaign_id: string): Promise<WhippyApiResponse<void>> {
     try {
-      await this.client.post(`/campaigns/${campaignId}/send`);
+      await this.client.post(`/campaigns/${campaign_id}/send`);
       return { success: true, message: 'Campaign sent successfully' };
     } catch (error: any) {
       return { success: false, error: error.message };
@@ -166,9 +181,9 @@ export class WhippyClient {
     }
   }
 
-  async getSequence(sequenceId: string): Promise<WhippyApiResponse<Sequence>> {
+  async getSequence(sequence_id: string): Promise<WhippyApiResponse<Sequence>> {
     try {
-      const response: AxiosResponse = await this.client.get(`/sequences/${sequenceId}`);
+      const response: AxiosResponse = await this.client.get(`/sequences/${sequence_id}`);
       return { success: true, data: response.data };
     } catch (error: any) {
       return { success: false, error: error.message };
@@ -195,9 +210,9 @@ export class WhippyClient {
   }
 
   // Conversations
-  async getConversation(conversationId: string): Promise<WhippyApiResponse<Conversation>> {
+  async getConversation(conversation_id: string): Promise<WhippyApiResponse<Conversation>> {
     try {
-      const response: AxiosResponse = await this.client.get(`/conversations/${conversationId}`);
+      const response: AxiosResponse = await this.client.get(`/conversations/${conversation_id}`);
       return { success: true, data: response.data };
     } catch (error: any) {
       return { success: false, error: error.message };
@@ -205,12 +220,12 @@ export class WhippyClient {
   }
 
   async listConversations(
-    page: number = 1,
+    offset: number = 0,
     limit: number = 50
   ): Promise<WhippyApiResponse<PaginatedResponse<Conversation>>> {
     try {
       const response: AxiosResponse = await this.client.get('/conversations', {
-        params: { page, limit },
+        params: { offset, limit },
       });
       return { success: true, data: response.data };
     } catch (error: any) {
@@ -219,9 +234,9 @@ export class WhippyClient {
   }
 
   // Analytics
-  async getCampaignAnalytics(campaignId: string): Promise<WhippyApiResponse<Analytics>> {
+  async getCampaignAnalytics(campaign_id: string): Promise<WhippyApiResponse<Analytics>> {
     try {
-      const response: AxiosResponse = await this.client.get(`/campaigns/${campaignId}/analytics`);
+      const response: AxiosResponse = await this.client.get(`/campaigns/${campaign_id}/analytics`);
       return { success: true, data: response.data };
     } catch (error: any) {
       return { success: false, error: error.message };

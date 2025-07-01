@@ -84,18 +84,18 @@ whippy-ai-mcp-server/
 
 | Tool Name                | Description                        | Parameters                                            |
 | ------------------------ | ---------------------------------- | ----------------------------------------------------- |
-| `create_contact`         | Create new contact                 | firstName, lastName, email, phone, tags, customFields |
-| `get_contact`            | Retrieve contact by ID             | contactId                                             |
-| `list_contacts`          | List contacts with pagination      | page, limit                                           |
+| `create_contact`         | Create new contact                 | name, email, phone                                    |
+| `get_contact`            | Retrieve contact by ID             | contact_id                                            |
+| `list_contacts`          | List contacts with pagination      | offset, limit                                         |
 | `send_sms`               | Send SMS message                   | to, message, from                                     |
 | `send_email`             | Send email                         | to, subject, message, from                            |
-| `create_campaign`        | Create marketing campaign          | name, message, contactIds, scheduledAt                |
+| `create_campaign`        | Create marketing campaign          | name, message, contact_ids, scheduled_at              |
 | `list_campaigns`         | List all campaigns                 | -                                                     |
-| `send_campaign`          | Execute campaign                   | campaignId                                            |
-| `create_lead`            | Create new lead                    | firstName, lastName, email, phone, source, status     |
-| `list_conversations`     | List conversations with pagination | page, limit                                           |
-| `get_conversation`       | Get conversation details           | conversationId                                        |
-| `get_campaign_analytics` | Get campaign metrics               | campaignId                                            |
+| `send_campaign`          | Execute campaign                   | campaign_id                                           |
+| `create_lead`            | Create new lead                    | name, email, phone, source, status                    |
+| `list_conversations`     | List conversations with pagination | offset, limit                                         |
+| `get_conversation`       | Get conversation details           | conversation_id                                       |
+| `get_campaign_analytics` | Get campaign metrics               | campaign_id                                           |
 
 ### Technology Stack
 
