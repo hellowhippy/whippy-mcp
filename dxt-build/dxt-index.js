@@ -1,4 +1,4 @@
-import { tools } from './src/lib/mcp-tools.js';
+import { tools } from './lib/mcp-tools.js';
 // Log uncaught exceptions and unhandled rejections
 process.on('uncaughtException', err => {
     console.error('[uncaughtException]', err);
@@ -93,7 +93,7 @@ class SimpleMcpServer {
     async start() {
         console.error('Starting simple MCP server...');
         // Register all tools
-        tools.forEach(tool => {
+        tools.forEach((tool) => {
             this.registerTool(tool.name, tool.description, tool.schema, tool.handler);
         });
         console.error('All tools registered, starting stdio communication...');

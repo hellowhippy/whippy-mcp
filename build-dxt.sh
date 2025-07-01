@@ -20,9 +20,9 @@ mkdir -p dist
 echo "🔨 Building TypeScript for src files..."
 npx tsc --project tsconfig.json
 
-# Compile dxt-index.ts separately
-echo "🔨 Compiling dxt-index.ts..."
-npx tsc dxt-index.ts --target ES2022 --module ESNext --moduleResolution bundler --outDir dist --strict --esModuleInterop --skipLibCheck --forceConsistentCasingInFileNames --allowSyntheticDefaultImports --resolveJsonModule --declaration --declarationMap --sourceMap
+# Compile src/dxt-index.ts separately
+echo "🔨 Compiling src/dxt-index.ts..."
+npx tsc src/dxt-index.ts --target ES2022 --module ESNext --moduleResolution bundler --outDir dist --strict --esModuleInterop --skipLibCheck --forceConsistentCasingInFileNames --allowSyntheticDefaultImports --resolveJsonModule --declaration --declarationMap --sourceMap
 
 # Create the DXT build directory structure
 echo "📦 Creating DXT package structure..."
