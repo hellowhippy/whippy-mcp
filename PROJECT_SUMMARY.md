@@ -7,7 +7,7 @@ This project provides a complete **Model Context Protocol (MCP) Server** that in
 ## 🏗️ Architecture
 
 ```
-AI Client (Claude/Cursor/Cline) 
+AI Client (Claude/Cursor/Cline)
     ↓ MCP Protocol
 Vercel-Deployed MCP Server
     ↓ HTTP/REST API
@@ -39,6 +39,7 @@ whippy-ai-mcp-server/
 ## 🚀 Key Features
 
 ### 1. Contact Management
+
 - **Create Contact**: Add new contacts with custom fields and tags
 - **Get Contact**: Retrieve contact details by ID
 - **List Contacts**: Paginated contact listing
@@ -46,27 +47,32 @@ whippy-ai-mcp-server/
 - **Delete Contact**: Remove contacts from the system
 
 ### 2. Messaging Capabilities
+
 - **Send SMS**: Send text messages to phone numbers
 - **Send Email**: Send emails with subject and content
 - **Message Tracking**: Track delivery status and responses
 
 ### 3. Campaign Management
+
 - **Create Campaigns**: Design marketing campaigns with targeted messaging
 - **List Campaigns**: View all campaigns and their status
 - **Send Campaigns**: Execute campaigns immediately or schedule for later
 - **Campaign Analytics**: Track performance metrics and engagement
 
 ### 4. Lead Management
+
 - **Create Leads**: Capture new leads with source tracking
 - **Lead Status**: Manage lead progression through sales funnel
 - **Lead Analytics**: Monitor lead conversion rates
 
 ### 5. Conversation Management
+
 - **List Conversations**: View all customer conversations
 - **Get Conversation**: Retrieve specific conversation details
 - **Conversation History**: Access complete message threads
 
 ### 6. Analytics & Reporting
+
 - **Campaign Analytics**: Detailed performance metrics
 - **Delivery Rates**: Track message delivery success
 - **Engagement Metrics**: Monitor open rates, click rates, response rates
@@ -76,20 +82,20 @@ whippy-ai-mcp-server/
 
 ### MCP Server Tools
 
-| Tool Name | Description | Parameters |
-|-----------|-------------|------------|
-| `create_contact` | Create new contact | firstName, lastName, email, phone, tags, customFields |
-| `get_contact` | Retrieve contact by ID | contactId |
-| `list_contacts` | List contacts with pagination | page, limit |
-| `send_sms` | Send SMS message | to, message, from |
-| `send_email` | Send email | to, subject, message, from |
-| `create_campaign` | Create marketing campaign | name, message, contactIds, scheduledAt |
-| `list_campaigns` | List all campaigns | - |
-| `send_campaign` | Execute campaign | campaignId |
-| `create_lead` | Create new lead | firstName, lastName, email, phone, source, status |
-| `list_conversations` | List conversations with pagination | page, limit |
-| `get_conversation` | Get conversation details | conversationId |
-| `get_campaign_analytics` | Get campaign metrics | campaignId |
+| Tool Name                | Description                        | Parameters                                            |
+| ------------------------ | ---------------------------------- | ----------------------------------------------------- |
+| `create_contact`         | Create new contact                 | firstName, lastName, email, phone, tags, customFields |
+| `get_contact`            | Retrieve contact by ID             | contactId                                             |
+| `list_contacts`          | List contacts with pagination      | page, limit                                           |
+| `send_sms`               | Send SMS message                   | to, message, from                                     |
+| `send_email`             | Send email                         | to, subject, message, from                            |
+| `create_campaign`        | Create marketing campaign          | name, message, contactIds, scheduledAt                |
+| `list_campaigns`         | List all campaigns                 | -                                                     |
+| `send_campaign`          | Execute campaign                   | campaignId                                            |
+| `create_lead`            | Create new lead                    | firstName, lastName, email, phone, source, status     |
+| `list_conversations`     | List conversations with pagination | page, limit                                           |
+| `get_conversation`       | Get conversation details           | conversationId                                        |
+| `get_campaign_analytics` | Get campaign metrics               | campaignId                                            |
 
 ### Technology Stack
 
@@ -100,6 +106,13 @@ whippy-ai-mcp-server/
 - **HTTP Client**: Axios
 - **Validation**: Zod
 - **Deployment**: Vercel Platform
+
+### Development Tools
+
+- **ESLint**: Code linting and style enforcement
+- **Prettier**: Automatic code formatting
+- **CSpell**: Spell checking for code and documentation
+- **GitHub Actions**: Automated CI/CD pipeline
 
 ### Security Features
 
@@ -112,6 +125,7 @@ whippy-ai-mcp-server/
 ## 🌐 Deployment Options
 
 ### Vercel (Recommended)
+
 - **One-click deployment** from GitHub
 - **Automatic scaling** based on demand
 - **Global CDN** for low latency
@@ -119,6 +133,7 @@ whippy-ai-mcp-server/
 - **Environment variable management**
 
 ### Local Development
+
 - TypeScript compilation with `npm run build`
 - Local testing with `npm run dev`
 - Hot reloading for development
@@ -126,6 +141,7 @@ whippy-ai-mcp-server/
 ## 🤖 AI Client Integration
 
 ### Supported Clients
+
 - **Claude Desktop**: Direct URL configuration
 - **Cursor IDE**: MCP settings integration
 - **Cline**: Remote MCP server support
@@ -134,6 +150,7 @@ whippy-ai-mcp-server/
 ### Configuration Examples
 
 **Claude Desktop**:
+
 ```json
 {
   "mcpServers": {
@@ -145,6 +162,7 @@ whippy-ai-mcp-server/
 ```
 
 **Cursor IDE**:
+
 ```json
 {
   "mcpServers": {
@@ -158,6 +176,7 @@ whippy-ai-mcp-server/
 ## 📊 Use Cases & Workflows
 
 ### 1. Customer Communication
+
 ```
 AI: "Send an SMS to +1234567890 saying 'Your order has shipped!'"
 → Uses send_sms tool
@@ -166,6 +185,7 @@ AI: "Send an SMS to +1234567890 saying 'Your order has shipped!'"
 ```
 
 ### 2. Lead Management
+
 ```
 AI: "Create a lead for John Smith from our website contact form"
 → Uses create_lead tool
@@ -174,6 +194,7 @@ AI: "Create a lead for John Smith from our website contact form"
 ```
 
 ### 3. Campaign Analytics
+
 ```
 AI: "Show me the performance metrics for campaign xyz789"
 → Uses get_campaign_analytics tool
@@ -182,6 +203,7 @@ AI: "Show me the performance metrics for campaign xyz789"
 ```
 
 ### 4. Contact Management
+
 ```
 AI: "List all contacts tagged as 'VIP customers'"
 → Uses list_contacts tool with filtering
@@ -192,11 +214,13 @@ AI: "List all contacts tagged as 'VIP customers'"
 ## 🔧 Configuration & Environment
 
 ### Required Environment Variables
+
 ```bash
 WHIPPY_API_KEY=your_whippy_api_key_here
 ```
 
 ### Optional Environment Variables
+
 ```bash
 WHIPPY_BASE_URL=https://api.whippy.co/v1  # Custom API endpoint
 DEBUG=false                               # Enable debug logging
@@ -205,12 +229,14 @@ DEBUG=false                               # Enable debug logging
 ## 📈 Monitoring & Analytics
 
 ### Vercel Analytics
+
 - Response times and latency
 - Error rates and status codes
 - Geographic usage patterns
 - Function execution metrics
 
 ### Whippy Analytics
+
 - API usage and rate limiting
 - Message delivery rates
 - Campaign performance
@@ -219,11 +245,13 @@ DEBUG=false                               # Enable debug logging
 ## 🔄 Maintenance & Updates
 
 ### Automatic Deployments
+
 - GitHub integration triggers deployments
 - Preview deployments for pull requests
 - Production deployments on main branch
 
 ### Version Management
+
 - Semantic versioning with Git tags
 - Changelog maintenance
 - Backward compatibility considerations
@@ -231,18 +259,21 @@ DEBUG=false                               # Enable debug logging
 ## 🎯 Benefits
 
 ### For Developers
+
 - **Rapid Integration**: Pre-built Whippy API wrapper
 - **Type Safety**: Full TypeScript support
 - **Error Handling**: Comprehensive error management
 - **Scalability**: Vercel's global infrastructure
 
 ### For AI Workflows
+
 - **Natural Language Interface**: AI can use Whippy features conversationally
 - **Contextual Actions**: AI understands campaign and contact relationships
 - **Automated Workflows**: Chain multiple operations together
 - **Real-time Feedback**: Immediate confirmation of actions
 
 ### For Businesses
+
 - **Reduced Development Time**: Ready-to-deploy solution
 - **Cost Effective**: Serverless pricing model
 - **Global Availability**: Worldwide accessibility
@@ -259,6 +290,7 @@ DEBUG=false                               # Enable debug logging
 ## 🔮 Future Enhancements
 
 ### Potential Features
+
 - **Webhook Support**: Real-time event notifications
 - **Advanced Analytics**: Custom reporting dashboards
 - **Multi-tenant Support**: Multiple Whippy accounts
@@ -266,6 +298,7 @@ DEBUG=false                               # Enable debug logging
 - **Caching**: Response caching for better performance
 
 ### Integration Opportunities
+
 - **CRM Systems**: Salesforce, HubSpot integration
 - **E-commerce**: Shopify, WooCommerce webhooks
 - **Calendar**: Google Calendar, Outlook scheduling

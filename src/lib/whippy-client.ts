@@ -9,7 +9,7 @@ import {
   Conversation,
   WhippyApiResponse,
   PaginatedResponse,
-  Analytics
+  Analytics,
 } from '../types/whippy.js';
 
 export class WhippyClient {
@@ -18,21 +18,21 @@ export class WhippyClient {
 
   constructor(config: WhippyConfig) {
     this.apiKey = config.apiKey;
-    
+
     this.client = axios.create({
       baseURL: config.baseUrl || 'https://api.whippy.co/v1',
       headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${this.apiKey}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'Whippy-MCP-Server/1.0.0'
+        'User-Agent': 'Whippy-MCP-Server/1.0.0',
       },
-      timeout: 30000
+      timeout: 30000,
     });
 
     // Add response interceptor for error handling
     this.client.interceptors.response.use(
-      (response) => response,
-      (error) => {
+      response => response,
+      error => {
         console.error('Whippy API Error:', error.response?.data || error.message);
         throw error;
       }
@@ -58,10 +58,13 @@ export class WhippyClient {
     }
   }
 
-  async listContacts(page: number = 1, limit: number = 50): Promise<WhippyApiResponse<PaginatedResponse<Contact>>> {
+  async listContacts(
+    page: number = 1,
+    limit: number = 50
+  ): Promise<WhippyApiResponse<PaginatedResponse<Contact>>> {
     try {
       const response: AxiosResponse = await this.client.get('/contacts', {
-        params: { page, limit }
+        params: { page, limit },
       });
       return { success: true, data: response.data };
     } catch (error: any) {
@@ -69,7 +72,10 @@ export class WhippyClient {
     }
   }
 
-  async updateContact(contactId: string, contact: Partial<Contact>): Promise<WhippyApiResponse<Contact>> {
+  async updateContact(
+    contactId: string,
+    contact: Partial<Contact>
+  ): Promise<WhippyApiResponse<Contact>> {
     try {
       const response: AxiosResponse = await this.client.put(`/contacts/${contactId}`, contact);
       return { success: true, data: response.data };
@@ -135,7 +141,12 @@ export class WhippyClient {
     }
   }
 
-  async sendEmail(to: string, subject: string, message: string, from?: string): Promise<WhippyApiResponse<Message>> {
+  async sendEmail(
+    to: string,
+    subject: string,
+    message: string,
+    from?: string
+  ): Promise<WhippyApiResponse<Message>> {
     try {
       const payload = { to, subject, message, from };
       const response: AxiosResponse = await this.client.post('/messages/email', payload);
@@ -193,10 +204,13 @@ export class WhippyClient {
     }
   }
 
-  async listConversations(page: number = 1, limit: number = 50): Promise<WhippyApiResponse<PaginatedResponse<Conversation>>> {
+  async listConversations(
+    page: number = 1,
+    limit: number = 50
+  ): Promise<WhippyApiResponse<PaginatedResponse<Conversation>>> {
     try {
       const response: AxiosResponse = await this.client.get('/conversations', {
-        params: { page, limit }
+        params: { page, limit },
       });
       return { success: true, data: response.data };
     } catch (error: any) {

@@ -8,20 +8,40 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
-    "vercel-build": "npm run build"
+    "vercel-build": "npm run build",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "lint:check": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint:spell": "cspell \"**/*.{ts,tsx,js,jsx,md,json}\"",
+    "ci": "npm run type && npm run lint:check && npm run format:check && npm run lint:spell"
   },
-  "keywords": ["mcp", "whippy", "ai", "api", "vercel"],
+  "keywords": [
+    "mcp",
+    "whippy",
+    "ai",
+    "api",
+    "vercel"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "@vercel/mcp-adapter": "^0.1.0",
+    "@vercel/mcp-adapter": "^0.11.1",
     "zod": "^3.22.4",
     "axios": "^1.6.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0",
-    "tsx": "^4.0.0"
+    "tsx": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "cspell": "^8.0.0"
   },
   "engines": {
     "node": ">=18"

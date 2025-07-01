@@ -23,6 +23,7 @@ Before starting the deployment process, ensure you have:
 ## 🚀 Step 1: Repository Setup
 
 ### Option A: Fork this Repository
+
 1. Click the "Fork" button on the GitHub repository
 2. Clone your fork locally:
    ```bash
@@ -31,6 +32,7 @@ Before starting the deployment process, ensure you have:
    ```
 
 ### Option B: Create New Repository
+
 1. Create a new repository on GitHub
 2. Clone the template code
 3. Push to your new repository
@@ -38,17 +40,20 @@ Before starting the deployment process, ensure you have:
 ## 🔧 Step 2: Local Configuration
 
 1. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 2. **Create environment file**:
+
    ```bash
    cp .env.example .env.local
    ```
 
 3. **Configure environment variables**:
    Edit `.env.local`:
+
    ```bash
    WHIPPY_API_KEY=your_actual_whippy_api_key_here
    ```
@@ -62,6 +67,7 @@ Before starting the deployment process, ensure you have:
 ## ☁️ Step 3: Vercel Deployment
 
 ### Method 1: One-Click Deploy
+
 1. Click the "Deploy with Vercel" button in the README
 2. Connect your GitHub account
 3. Import the repository
@@ -69,20 +75,25 @@ Before starting the deployment process, ensure you have:
 5. Deploy
 
 ### Method 2: Manual Deployment
+
 1. **Install Vercel CLI**:
+
    ```bash
    npm install -g vercel
    ```
 
 2. **Login to Vercel**:
+
    ```bash
    vercel login
    ```
 
 3. **Deploy**:
+
    ```bash
    vercel
    ```
+
    Follow the prompts to:
    - Link to existing project or create new
    - Configure project settings
@@ -96,16 +107,18 @@ Before starting the deployment process, ensure you have:
 ## 🔐 Step 4: Environment Variables
 
 ### In Vercel Dashboard:
+
 1. Go to your project in Vercel dashboard
 2. Navigate to "Settings" → "Environment Variables"
 3. Add the following variables:
 
-| Variable | Value | Required |
-|----------|-------|----------|
-| `WHIPPY_API_KEY` | Your Whippy AI API key | Yes |
-| `DEBUG` | `false` (or `true` for debugging) | No |
+| Variable         | Value                             | Required |
+| ---------------- | --------------------------------- | -------- |
+| `WHIPPY_API_KEY` | Your Whippy AI API key            | Yes      |
+| `DEBUG`          | `false` (or `true` for debugging) | No       |
 
 ### Security Notes:
+
 - ✅ Never commit API keys to your repository
 - ✅ Use Vercel's encrypted environment variables
 - ✅ Rotate API keys regularly
@@ -114,10 +127,12 @@ Before starting the deployment process, ensure you have:
 ## 🔗 Step 5: Get Your MCP Server URL
 
 After successful deployment, you'll get URLs like:
+
 - **Production**: `https://your-project-name.vercel.app`
 - **Preview**: `https://your-project-name-git-branch.vercel.app`
 
 Your MCP endpoints will be:
+
 - **HTTP Transport**: `https://your-project-name.vercel.app/api/mcp`
 - **SSE Transport**: `https://your-project-name.vercel.app/api/sse`
 
@@ -130,6 +145,7 @@ Your MCP endpoints will be:
    - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
 2. **Add configuration**:
+
    ```json
    {
      "mcpServers": {
@@ -175,6 +191,7 @@ Your MCP endpoints will be:
 ### Other MCP Clients
 
 For other MCP-compatible clients, use:
+
 - **Server URL**: `https://your-project-name.vercel.app/api/mcp`
 - **Transport**: HTTP/HTTPS
 - **Protocol**: MCP 1.0
@@ -182,12 +199,15 @@ For other MCP-compatible clients, use:
 ## ✅ Step 7: Verify Deployment
 
 ### Test Server Accessibility
+
 ```bash
 curl https://your-project-name.vercel.app/api/mcp
 ```
 
 ### Test in AI Client
+
 Try these commands in your AI client:
+
 ```
 List all contacts from Whippy
 ```
@@ -197,7 +217,9 @@ Create a test contact with name "Test User" and email "test@example.com"
 ```
 
 ### Expected Response
+
 You should see:
+
 - ✅ Server responds to requests
 - ✅ Tools are available in AI client
 - ✅ API calls to Whippy work correctly
@@ -206,6 +228,7 @@ You should see:
 ## 📊 Step 8: Monitoring & Maintenance
 
 ### Vercel Analytics
+
 1. Enable Analytics in Vercel dashboard
 2. Monitor:
    - Response times
@@ -214,12 +237,14 @@ You should see:
    - Geographic distribution
 
 ### Whippy API Monitoring
+
 1. Check API usage in Whippy dashboard
 2. Monitor rate limits
 3. Track API costs
 4. Review error logs
 
 ### Logs & Debugging
+
 - **Vercel Logs**: Available in dashboard under "Functions" tab
 - **Debug Mode**: Set `DEBUG=true` in environment variables
 - **Error Tracking**: Monitor 4xx/5xx responses
@@ -227,10 +252,12 @@ You should see:
 ## 🔄 Step 9: Updates & Maintenance
 
 ### Automatic Deployments
+
 - Push to `main` branch triggers production deployment
 - Push to other branches creates preview deployments
 
 ### Manual Updates
+
 ```bash
 # Pull latest changes
 git pull origin main
@@ -240,6 +267,7 @@ vercel --prod
 ```
 
 ### Version Management
+
 - Tag releases: `git tag v1.0.0`
 - Use semantic versioning
 - Document changes in commit messages
@@ -269,6 +297,7 @@ vercel --prod
    - Consider upgrading Whippy plan
 
 ### Debug Steps
+
 1. Check Vercel function logs
 2. Test server endpoint directly
 3. Verify environment variables
@@ -276,6 +305,7 @@ vercel --prod
 5. Check Whippy API status
 
 ### Getting Help
+
 - **Vercel Support**: [vercel.com/support](https://vercel.com/support)
 - **Whippy Support**: [support@whippy.ai](mailto:support@whippy.ai)
 - **MCP Documentation**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
@@ -285,6 +315,7 @@ vercel --prod
 Your Whippy AI MCP Server is now deployed and ready to enhance your AI workflows with powerful communication and marketing automation capabilities!
 
 ### Next Steps
+
 - Explore all available tools
 - Create custom workflows
 - Monitor usage and performance

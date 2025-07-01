@@ -5,27 +5,32 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 ## 🚀 Features
 
 ### Contact Management
+
 - ✅ Create, read, update, and delete contacts
 - 📋 List contacts with pagination
 - 🏷️ Tag management and custom fields
 
 ### Messaging
+
 - 📱 Send SMS messages
 - 📧 Send emails
 - 💬 Conversation management
 
 ### Campaign Management
+
 - 🚀 Create and manage campaigns
 - 📊 Campaign analytics
 - ⏰ Schedule campaigns
 - 🎯 Target specific contacts
 
 ### Lead Management
+
 - 🎯 Create and track leads
 - 📈 Lead source tracking
 - 🔄 Lead status management
 
 ### Analytics
+
 - 📊 Campaign performance metrics
 - 📈 Delivery and engagement rates
 - 💡 Actionable insights
@@ -42,23 +47,27 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 ### Local Development
 
 1. **Clone the repository**:
+
    ```bash
    git clone <your-repo-url>
    cd whippy-ai-mcp-server
    ```
 
 2. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**:
    Create a `.env.local` file:
+
    ```bash
    WHIPPY_API_KEY=your_whippy_api_key_here
    ```
 
 4. **Build the project**:
+
    ```bash
    npm run build
    ```
@@ -77,6 +86,7 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 ### Manual Deployment
 
 1. **Connect to Vercel**:
+
    ```bash
    npx vercel
    ```
@@ -189,20 +199,20 @@ Create a new lead with name Sarah Johnson, email sarah@example.com, source "webs
 
 ## 🔧 Available Tools
 
-| Tool | Description | Parameters |
-|------|-------------|------------|
-| `create_contact` | Create a new contact | firstName, lastName, email, phone, tags, customFields |
-| `get_contact` | Get contact by ID | contactId |
-| `list_contacts` | List contacts with pagination | page, limit |
-| `send_sms` | Send SMS message | to, message, from |
-| `send_email` | Send email | to, subject, message, from |
-| `create_campaign` | Create new campaign | name, message, contactIds, scheduledAt |
-| `list_campaigns` | List all campaigns | - |
-| `send_campaign` | Send campaign immediately | campaignId |
-| `create_lead` | Create new lead | firstName, lastName, email, phone, source, status |
-| `list_conversations` | List conversations with pagination | page, limit |
-| `get_conversation` | Get conversation by ID | conversationId |
-| `get_campaign_analytics` | Get campaign analytics | campaignId |
+| Tool                     | Description                        | Parameters                                            |
+| ------------------------ | ---------------------------------- | ----------------------------------------------------- |
+| `create_contact`         | Create a new contact               | firstName, lastName, email, phone, tags, customFields |
+| `get_contact`            | Get contact by ID                  | contactId                                             |
+| `list_contacts`          | List contacts with pagination      | page, limit                                           |
+| `send_sms`               | Send SMS message                   | to, message, from                                     |
+| `send_email`             | Send email                         | to, subject, message, from                            |
+| `create_campaign`        | Create new campaign                | name, message, contactIds, scheduledAt                |
+| `list_campaigns`         | List all campaigns                 | -                                                     |
+| `send_campaign`          | Send campaign immediately          | campaignId                                            |
+| `create_lead`            | Create new lead                    | firstName, lastName, email, phone, source, status     |
+| `list_conversations`     | List conversations with pagination | page, limit                                           |
+| `get_conversation`       | Get conversation by ID             | conversationId                                        |
+| `get_campaign_analytics` | Get campaign analytics             | campaignId                                            |
 
 ## 🔒 Security
 
@@ -216,6 +226,7 @@ Create a new lead with name Sarah Johnson, email sarah@example.com, source "webs
 ### Vercel Analytics
 
 Monitor your MCP server performance:
+
 - Response times
 - Error rates
 - Usage patterns
@@ -224,6 +235,7 @@ Monitor your MCP server performance:
 ### Whippy Analytics
 
 Track your messaging and campaign performance:
+
 - Delivery rates
 - Open rates
 - Response rates
@@ -235,6 +247,9 @@ Track your messaging and campaign performance:
 
 ```
 whippy-ai-mcp-server/
+├── .github/
+│   └── workflows/
+│       └── ci.yml            # GitHub Actions CI/CD
 ├── api/
 │   └── [transport]/
 │       └── route.ts          # MCP server endpoint
@@ -243,27 +258,74 @@ whippy-ai-mcp-server/
 │   │   └── whippy-client.ts  # Whippy API client
 │   └── types/
 │       └── whippy.ts         # TypeScript types
+├── .eslintrc.json           # ESLint configuration
+├── .prettierrc              # Prettier configuration
+├── cspell.json              # CSpell configuration
 ├── package.json
 ├── tsconfig.json
 ├── vercel.json
 └── README.md
 ```
 
+### Development Scripts
+
+```bash
+# Type checking
+npm run type              # Check TypeScript types
+npm run build            # Build the project
+
+# Code quality
+npm run lint             # Fix linting issues automatically
+npm run lint:check       # Check linting without fixing
+npm run format           # Format code with Prettier
+npm run format:check     # Check formatting without fixing
+npm run lint:spell       # Check spelling with CSpell
+
+# CI pipeline
+npm run ci               # Run all checks (type, lint, format, spell)
+
+# Development
+npm run dev              # Start development server
+```
+
+### Code Quality Tools
+
+- **TypeScript**: Full type safety and modern JavaScript features
+- **ESLint**: Code linting and style enforcement
+- **Prettier**: Automatic code formatting
+- **CSpell**: Spell checking for code and documentation
+
+### GitHub Actions CI/CD
+
+The project includes a comprehensive CI/CD pipeline that:
+
+- ✅ Runs on Node.js 18.x and 20.x
+- ✅ Performs type checking
+- ✅ Runs linting checks
+- ✅ Validates code formatting
+- ✅ Checks spelling
+- ✅ Builds the project
+- ✅ Deploys to Vercel (preview for PRs, production for main branch)
+
 ### Adding New Features
 
 1. **Add new types** in `src/types/whippy.ts`
 2. **Extend the client** in `src/lib/whippy-client.ts`
 3. **Add new tools** in `api/[transport]/route.ts`
-4. **Test thoroughly** before deployment
+4. **Run quality checks**: `npm run ci`
+5. **Test thoroughly** before deployment
 
-### Testing
+### Pre-commit Workflow
+
+Before committing code, run:
 
 ```bash
-# Run type checking
-npm run build
+# Fix any issues automatically
+npm run lint
+npm run format
 
-# Test locally
-npm run dev
+# Verify everything passes
+npm run ci
 ```
 
 ## 🐛 Troubleshooting
@@ -286,6 +348,7 @@ npm run dev
 ### Debug Mode
 
 Enable debug logging by setting:
+
 ```bash
 DEBUG=true
 ```
@@ -321,4 +384,3 @@ Built with ❤️ for the AI development community
 ```sh
 node scripts/test-client.mjs https://mcp-on-vercel.vercel.app
 ```
-
