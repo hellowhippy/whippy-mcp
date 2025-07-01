@@ -87,7 +87,7 @@ whippy-ai-mcp-server/
 | `list_campaigns` | List all campaigns | - |
 | `send_campaign` | Execute campaign | campaignId |
 | `create_lead` | Create new lead | firstName, lastName, email, phone, source, status |
-| `list_conversations` | List conversations | - |
+| `list_conversations` | List conversations with pagination | page, limit |
 | `get_conversation` | Get conversation details | conversationId |
 | `get_campaign_analytics` | Get campaign metrics | campaignId |
 

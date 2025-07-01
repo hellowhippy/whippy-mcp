@@ -378,18 +378,21 @@ const handler = createMcpHandler(async (server) => {
   // Conversation Management Tools
   server.tool(
     'list_conversations',
-    'List all conversations from Whippy',
-    {},
-    async () => {
+    'List conversations from Whippy with pagination',
+    {
+      page: z.number().min(1).default(1).describe('Page number for pagination'),
+      limit: z.number().min(1).max(100).default(50).describe('Number of conversations per page')
+    },
+    async ({ page, limit }) => {
       try {
         const client = getWhippyClient();
-        const result = await client.listConversations();
+        const result = await client.listConversations(page, limit);
         
         if (result.success) {
           return {
             content: [{
               type: 'text',
-              text: `💬 Conversations:\n${JSON.stringify(result.data, null, 2)}`
+              text: `💬 Conversations (Page ${page}):\n${JSON.stringify(result.data, null, 2)}`
             }]
           };
         } else {

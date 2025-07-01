@@ -200,7 +200,7 @@ Create a new lead with name Sarah Johnson, email sarah@example.com, source "webs
 | `list_campaigns` | List all campaigns | - |
 | `send_campaign` | Send campaign immediately | campaignId |
 | `create_lead` | Create new lead | firstName, lastName, email, phone, source, status |
-| `list_conversations` | List all conversations | - |
+| `list_conversations` | List conversations with pagination | page, limit |
 | `get_conversation` | Get conversation by ID | conversationId |
 | `get_campaign_analytics` | Get campaign analytics | campaignId |
 

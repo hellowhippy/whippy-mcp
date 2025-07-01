@@ -193,9 +193,11 @@ export class WhippyClient {
     }
   }
 
-  async listConversations(): Promise<WhippyApiResponse<Conversation[]>> {
+  async listConversations(page: number = 1, limit: number = 50): Promise<WhippyApiResponse<PaginatedResponse<Conversation>>> {
     try {
-      const response: AxiosResponse = await this.client.get('/conversations');
+      const response: AxiosResponse = await this.client.get('/conversations', {
+        params: { page, limit }
+      });
       return { success: true, data: response.data };
     } catch (error: any) {
       return { success: false, error: error.message };
