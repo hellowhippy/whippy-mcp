@@ -299,7 +299,7 @@ yarn dev              # Start development server
 
 The project includes a comprehensive CI pipeline that:
 
-- ✅ Runs on Node.js 18.x and 20.x
+- ✅ Runs on Node.js 20
 - ✅ Performs type checking
 - ✅ Runs linting checks
 - ✅ Validates code formatting

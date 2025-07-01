@@ -41,7 +41,7 @@ This document summarizes the comprehensive development tooling and CI pipeline t
 - **Configuration**: `.github/workflows/ci.yml`
 - **Purpose**: Automated testing and quality checks
 - **Features**:
-  - Multi-Node.js version testing (18.x, 20.x)
+  - Node.js 20 testing
   - Comprehensive quality checks
   - Build verification
 
@@ -79,7 +79,7 @@ yarn start          # Start production server
 #### **Quality Checks Job**
 
 - ✅ Checkout code
-- ✅ Setup Node.js (18.x, 20.x matrix)
+- ✅ Setup Node.js 20
 - ✅ Install dependencies
 - ✅ Type checking (`yarn type`)
 - ✅ Linting (`yarn lint:check`)
