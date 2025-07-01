@@ -99,7 +99,7 @@ whippy-ai-mcp-server/
 
 ### Technology Stack
 
-- **Runtime**: Node.js 18+
+- **Runtime**: Node.js 20+
 - **Language**: TypeScript
 - **Framework**: Vercel Functions
 - **MCP Library**: `@vercel/mcp-adapter`

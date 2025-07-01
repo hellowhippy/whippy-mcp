@@ -42,7 +42,7 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 1. **Whippy AI Account**: Sign up at [Whippy.ai](https://whippy.ai)
 2. **API Key**: Generate an API key from your Whippy dashboard
 3. **Vercel Account**: For deployment (free tier available)
-4. **Node.js**: Version 18 or higher
+4. **Node.js**: Version 20 or higher
 
 ### Local Development
 
