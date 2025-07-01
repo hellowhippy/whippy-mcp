@@ -308,7 +308,7 @@ const handler = createMcpHandler(async (server) => {
           return {
             content: [{
               type: 'text',
-              text: `🚀 Campaign sent successfully! ${result.message}`
+              text: `🚀 Campaign sent successfully!${result.message ? ` ${result.message}` : ''}`
             }]
           };
         } else {
