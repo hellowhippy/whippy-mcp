@@ -1,4 +1,4 @@
-import { tools } from './src/lib/mcp-tools';
+import { tools } from './src/lib/mcp-tools.js';
 // Log uncaught exceptions and unhandled rejections
 process.on('uncaughtException', err => {
     console.error('[uncaughtException]', err);

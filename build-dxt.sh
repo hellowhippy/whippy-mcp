@@ -24,15 +24,20 @@ npx tsc --project tsconfig.json
 echo "🔨 Compiling dxt-index.ts..."
 npx tsc dxt-index.ts --target ES2022 --module ESNext --moduleResolution bundler --outDir dist --strict --esModuleInterop --skipLibCheck --forceConsistentCasingInFileNames --allowSyntheticDefaultImports --resolveJsonModule --declaration --declarationMap --sourceMap
 
-# Copy necessary files to dist
-echo "📋 Copying files to dist..."
-cp -r src/lib dist/
-cp -r src/types dist/
-
 # Create the DXT build directory structure
 echo "📦 Creating DXT package structure..."
 mkdir -p dxt-build
-cp -r dist/* dxt-build/
+mkdir -p dxt-build/lib
+mkdir -p dxt-build/types
+
+# Copy compiled files to DXT build
+echo "📋 Copying compiled files to dxt-build..."
+cp dist/dxt-index.js dxt-build/
+cp dist/dxt-index.d.ts dxt-build/ 2>/dev/null || true
+cp dist/dxt-index.js.map dxt-build/ 2>/dev/null || true
+cp -r dist/lib/* dxt-build/lib/
+cp -r dist/types/* dxt-build/types/
+
 cp manifest.json dxt-build/
 cp package.json dxt-build/
 

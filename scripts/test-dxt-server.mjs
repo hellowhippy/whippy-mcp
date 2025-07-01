@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 console.log('🧪 Testing DXT MCP Server...');
 
 // Test the compiled server
-const serverPath = join(__dirname, '..', 'dxt-build', 'dist', 'dxt-index.js');
+const serverPath = join(__dirname, '..', 'dxt-build', 'dxt-index.js');
 const nodePath = process.execPath;
 
 console.log(`Using Node.js: ${nodePath}`);

@@ -12,10 +12,10 @@
   "license": "MIT",
   "server": {
     "type": "node",
-    "entry_point": "dist/dxt-index.js",
+    "entry_point": "dxt-index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/dist/dxt-index.js"],
+      "args": ["${__dirname}/dxt-index.js"],
       "env": {
         "NODE_ENV": "production",
         "WHIPPY_API_KEY": "${user_config.whippy_api_key}",
