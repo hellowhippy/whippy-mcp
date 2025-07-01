@@ -1,6 +1,6 @@
 # Whippy AI MCP Server
 
-A Model Context Protocol (MCP) server that provides AI services with access to the Whippy AI Public API for managing contacts, campaigns, messaging, and more. This server can be deployed on Vercel for global accessibility.
+A Model Context Protocol (MCP) server that provides AI services with access to the Whippy AI Public API for managing contacts, campaigns, messaging, and more. This server can be deployed on Vercel for global accessibility or installed as a Claude Desktop Extension (DXT).
 
 ## 🚀 Features
 
@@ -42,7 +42,8 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 1. **Whippy AI Account**: Sign up at [Whippy.ai](https://whippy.ai)
 2. **API Key**: Generate an API key from your Whippy dashboard
 3. **Vercel Account**: For deployment (free tier available)
-4. **Node.js**: Version 20 or higher
+4. **Claude Desktop**: For DXT installation (optional)
+5. **Node.js**: Version 20 or higher
 
 ### Local Development
 
@@ -102,6 +103,31 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
    ```
 
 Your MCP server will be available at: `https://your-project.vercel.app`
+
+## 🖥️ Claude Desktop Extension (DXT)
+
+### Installation
+
+1. **Build the DXT package**:
+   ```bash
+   chmod +x build-dxt.sh
+   ./build-dxt.sh
+   ```
+
+2. **Install in Claude Desktop**:
+   - Open Claude Desktop
+   - Go to Settings > Extensions
+   - Click "Install from file"
+   - Select the generated `whippy-ai-mcp.dxt` file
+   - Configure your Whippy API key in the extension settings
+
+### DXT Configuration
+
+The extension will prompt you to configure:
+- **Whippy API Key**: Your Whippy AI API key
+- **Base URL**: Whippy API base URL (optional, defaults to production)
+
+For detailed installation instructions, see [docs/DXT_INSTALLATION.md](docs/DXT_INSTALLATION.md).
 
 ## 🔧 Configuration
 
@@ -246,21 +272,26 @@ Track your messaging and campaign performance:
 ### Project Structure
 
 ```
-whippy-ai-mcp-server/
-├── .github/
-│   └── workflows/
-│       └── ci.yml            # GitHub Actions CI/CD
+whippy-mcp/
 ├── api/
 │   └── [transport]/
 │       └── route.ts          # MCP server endpoint
+├── docs/                     # Documentation
+│   ├── DEPLOYMENT.md         # Deployment guide
+│   ├── DEVELOPMENT_SUMMARY.md # Development overview
+│   ├── DXT_INSTALLATION.md   # DXT installation guide
+│   ├── PROJECT_SUMMARY.md    # Project overview
+│   └── REFACTORING_SUMMARY.md # Refactoring details
 ├── src/
 │   ├── lib/
+│   │   ├── mcp-tools.ts      # Centralized MCP tools
 │   │   └── whippy-client.ts  # Whippy API client
 │   └── types/
 │       └── whippy.ts         # TypeScript types
-├── .eslintrc.json           # ESLint configuration
-├── .prettierrc              # Prettier configuration
-├── cspell.json              # CSpell configuration
+├── dxt-index.ts              # DXT entry point
+├── build-dxt.sh              # DXT build script
+├── dxt-package.json          # DXT package configuration
+├── manifest.json             # DXT manifest
 ├── package.json
 ├── tsconfig.json
 ├── vercel.json
@@ -310,9 +341,16 @@ The project includes a comprehensive CI pipeline that:
 
 1. **Add new types** in `src/types/whippy.ts`
 2. **Extend the client** in `src/lib/whippy-client.ts`
-3. **Add new tools** in `api/[transport]/route.ts`
+3. **Add new tools** in `src/lib/mcp-tools.ts`
 4. **Run quality checks**: `yarn ci`
 5. **Test thoroughly** before deployment
+
+### Code Organization
+
+The project has been refactored to eliminate code duplication:
+- **Centralized Tools**: All MCP tools are defined in `src/lib/mcp-tools.ts`
+- **Shared Logic**: Both Vercel deployment and DXT extension use the same tool definitions
+- **TypeScript Only**: Removed JavaScript duplicates for cleaner maintenance
 
 ### Pre-commit Workflow
 
@@ -369,6 +407,7 @@ MIT License - see LICENSE file for details.
 - **Whippy AI Documentation**: [docs.whippy.ai](https://docs.whippy.ai)
 - **MCP Documentation**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **Vercel Documentation**: [vercel.com/docs](https://vercel.com/docs)
+- **Claude Desktop Extensions**: [docs.anthropic.com](https://docs.anthropic.com/claude/docs/desktop-extensions)
 
 ## 🌟 Acknowledgments
 

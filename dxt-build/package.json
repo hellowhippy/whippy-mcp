@@ -1,0 +1,18 @@
+{
+  "name": "whippy-ai-mcp-dxt",
+  "version": "1.0.0",
+  "description": "Whippy AI MCP Server for Claude Desktop Extensions",
+  "main": "dist/dxt-index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.2",
+    "@vercel/mcp-adapter": "^0.11.1",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+} 

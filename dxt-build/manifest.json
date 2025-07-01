@@ -1,0 +1,118 @@
+{
+  "name": "whippy-ai-mcp-dxt",
+  "version": "1.0.0",
+  "description": "Whippy AI MCP Server for Claude Desktop Extensions",
+  "dxt_version": "1",
+  "author": {
+    "name": "Your Name",
+    "email": "your@email.com"
+  },
+  "license": "MIT",
+  "main": "dist/dxt-index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.2",
+    "@vercel/mcp-adapter": "^0.11.1",
+    "axios": "^1.6.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "tsc && cp src/lib/whippy-client.ts src/lib/whippy-client.js",
+    "start": "node dxt-index.js"
+  },
+  "configuration": {
+    "whippy_api_key": {
+      "type": "string",
+      "description": "Your Whippy AI API key",
+      "sensitive": true,
+      "required": true
+    },
+    "whippy_base_url": {
+      "type": "string",
+      "description": "Whippy AI API base URL (optional)",
+      "default": "https://api.whippy.co/v1",
+      "required": false
+    }
+  },
+  "tools": [
+    {
+      "name": "create_contact",
+      "description": "Create a new contact in Whippy"
+    },
+    {
+      "name": "get_contact",
+      "description": "Get a contact by ID from Whippy"
+    },
+    {
+      "name": "list_contacts",
+      "description": "List contacts from Whippy with pagination"
+    },
+    {
+      "name": "send_sms",
+      "description": "Send an SMS message via Whippy"
+    },
+    {
+      "name": "send_email",
+      "description": "Send an email message via Whippy"
+    },
+    {
+      "name": "create_campaign",
+      "description": "Create a new campaign in Whippy"
+    },
+    {
+      "name": "get_campaign",
+      "description": "Get a campaign by ID from Whippy"
+    },
+    {
+      "name": "list_campaigns",
+      "description": "List all campaigns from Whippy"
+    },
+    {
+      "name": "send_campaign",
+      "description": "Send a campaign via Whippy"
+    },
+    {
+      "name": "create_sequence",
+      "description": "Create a new sequence in Whippy"
+    },
+    {
+      "name": "get_sequence",
+      "description": "Get a sequence by ID from Whippy"
+    },
+    {
+      "name": "list_sequences",
+      "description": "List all sequences from Whippy"
+    },
+    {
+      "name": "create_lead",
+      "description": "Create a new lead in Whippy"
+    },
+    {
+      "name": "get_conversation",
+      "description": "Get a conversation by ID from Whippy"
+    },
+    {
+      "name": "list_conversations",
+      "description": "List conversations from Whippy with pagination"
+    },
+    {
+      "name": "get_campaign_analytics",
+      "description": "Get analytics for a specific campaign"
+    }
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/dxt-index.js",
+    "mcp_config": {
+      "transport": "http",
+      "command": "node"
+    }
+  }
+} 
