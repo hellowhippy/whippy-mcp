@@ -109,7 +109,7 @@ yarn start          # Start production server
 
 1. Create feature branch
 2. Make changes
-3. Run `yarn ci` to ensure quality
+3. Run `yarn ci` to ensure quality.
 4. Push to GitHub
 5. GitHub Actions automatically runs CI pipeline
 6. Merge after CI passes

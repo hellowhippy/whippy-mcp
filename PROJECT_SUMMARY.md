@@ -6,7 +6,7 @@ This project provides a complete **Model Context Protocol (MCP) Server** that in
 
 ## 🏗️ Architecture
 
-```
+```text
 AI Client (Claude/Cursor/Cline)
     ↓ MCP Protocol
 Vercel-Deployed MCP Server
@@ -16,7 +16,7 @@ Whippy AI Public API
 
 ## 📦 Project Structure
 
-```
+```text
 whippy-ai-mcp-server/
 ├── api/
 │   └── [transport]/
@@ -177,7 +177,7 @@ whippy-ai-mcp-server/
 
 ### 1. Customer Communication
 
-```
+```text
 AI: "Send an SMS to +1234567890 saying 'Your order has shipped!'"
 → Uses send_sms tool
 → Message delivered via Whippy
@@ -186,7 +186,7 @@ AI: "Send an SMS to +1234567890 saying 'Your order has shipped!'"
 
 ### 2. Lead Management
 
-```
+```text
 AI: "Create a lead for John Smith from our website contact form"
 → Uses create_lead tool
 → Lead created in Whippy with source tracking
@@ -195,7 +195,7 @@ AI: "Create a lead for John Smith from our website contact form"
 
 ### 3. Campaign Analytics
 
-```
+```text
 AI: "Show me the performance metrics for campaign xyz789"
 → Uses get_campaign_analytics tool
 → Returns delivery rates, open rates, click rates
@@ -204,7 +204,7 @@ AI: "Show me the performance metrics for campaign xyz789"
 
 ### 4. Contact Management
 
-```
+```text
 AI: "List all contacts tagged as 'VIP customers'"
 → Uses list_contacts tool with filtering
 → Returns paginated list of VIP contacts

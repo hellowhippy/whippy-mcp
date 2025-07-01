@@ -21,7 +21,7 @@ A Model Context Protocol (MCP) server that provides AI services with access to t
 - 🚀 Create and manage campaigns
 - 📊 Campaign analytics
 - ⏰ Schedule campaigns
-- 🎯 Target specific contacts
+- 🎯 Target-specific contacts
 
 ### Lead Management
 

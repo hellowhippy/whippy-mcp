@@ -24,7 +24,7 @@ Before starting the deployment process, ensure you have:
 
 ### Option A: Fork this Repository
 
-1. Click the "Fork" button on the GitHub repository
+1. Click the "Fork" button on the GitHub repository, and
 2. Clone your fork locally:
    ```bash
    git clone https://github.com/YOUR_USERNAME/whippy-ai-mcp-server.git
