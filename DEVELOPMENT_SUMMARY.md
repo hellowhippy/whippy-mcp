@@ -2,7 +2,7 @@
 
 ## 🎯 Overview
 
-This document summarizes the comprehensive development tooling and CI/CD pipeline that has been added to the Whippy AI MCP Server project.
+This document summarizes the comprehensive development tooling and CI pipeline that has been added to the Whippy AI MCP Server project.
 
 ## 🛠️ Tools Added
 
@@ -36,14 +36,14 @@ This document summarizes the comprehensive development tooling and CI/CD pipelin
   - Ignores generated files and dependencies
   - Supports multiple file types (TypeScript, JavaScript, Markdown, JSON)
 
-### 4. **GitHub Actions** - CI/CD Pipeline
+### 4. **GitHub Actions** - CI Pipeline
 
 - **Configuration**: `.github/workflows/ci.yml`
-- **Purpose**: Automated testing, building, and deployment
+- **Purpose**: Automated testing and quality checks
 - **Features**:
   - Multi-Node.js version testing (18.x, 20.x)
   - Comprehensive quality checks
-  - Automatic Vercel deployment
+  - Build verification
 
 ## 📜 NPM Scripts
 
@@ -67,7 +67,7 @@ yarn dev            # Start development server
 yarn start          # Start production server
 ```
 
-## 🔄 CI/CD Pipeline
+## 🔄 CI Pipeline
 
 ### Triggers
 
@@ -76,7 +76,7 @@ yarn start          # Start production server
 
 ### Pipeline Steps
 
-#### 1. **Test Job**
+#### **Quality Checks Job**
 
 - ✅ Checkout code
 - ✅ Setup Node.js (18.x, 20.x matrix)
@@ -86,17 +86,6 @@ yarn start          # Start production server
 - ✅ Format checking (`yarn format:check`)
 - ✅ Spell checking (`yarn lint:spell`)
 - ✅ Build project (`yarn build`)
-- ✅ Upload build artifacts
-
-#### 2. **Deploy Preview Job** (Pull Requests)
-
-- ✅ Deploy to Vercel preview environment
-- ✅ Requires test job to pass first
-
-#### 3. **Deploy Production Job** (Main Branch)
-
-- ✅ Deploy to Vercel production environment
-- ✅ Requires test job to pass first
 
 ## 🔧 Configuration Files
 
@@ -106,7 +95,7 @@ yarn start          # Start production server
 | `.prettierrc`              | Prettier Config | Code formatting preferences            |
 | `.prettierignore`          | Prettier Ignore | Files to exclude from formatting       |
 | `cspell.json`              | CSpell Config   | Spell checking dictionary and settings |
-| `.github/workflows/ci.yml` | GitHub Actions  | CI/CD pipeline configuration           |
+| `.github/workflows/ci.yml` | GitHub Actions  | CI pipeline configuration              |
 
 ## 🚀 Development Workflow
 
@@ -123,8 +112,7 @@ yarn start          # Start production server
 3. Run `yarn ci` to ensure quality
 4. Push to GitHub
 5. GitHub Actions automatically runs CI pipeline
-6. Preview deployment created for testing
-7. Merge to main triggers production deployment
+6. Merge after CI passes
 
 ## 📊 Quality Metrics
 
@@ -135,7 +123,7 @@ yarn start          # Start production server
 - ✅ **Formatting**: Consistent Prettier formatting
 - ✅ **Spelling**: No spelling errors detected
 - ✅ **Build**: Successful compilation
-- ✅ **CI/CD**: Automated pipeline operational
+- ✅ **CI**: Automated pipeline operational
 
 ### Benefits Achieved
 
@@ -143,8 +131,8 @@ yarn start          # Start production server
 - 🚀 **Developer Experience**: Automated formatting and linting
 - 🐛 **Error Prevention**: Early detection of issues
 - 📚 **Documentation**: Spell-checked and well-formatted
-- 🔄 **Automation**: Hands-off deployment process
-- 🌐 **Multi-Environment**: Preview and production deployments
+- 🔄 **Automation**: Automated quality checks
+- 🌐 **Consistency**: Standardized development workflow
 
 ## 🎉 Success Metrics
 
@@ -155,6 +143,6 @@ All quality checks are passing:
 - **Formatting**: ✅ Consistent code style
 - **Spelling**: ✅ No spelling errors
 - **Build**: ✅ Successful compilation
-- **CI Pipeline**: ✅ Automated testing and deployment
+- **CI Pipeline**: ✅ Automated testing and quality checks
 
-The project now has enterprise-grade development tooling and CI/CD pipeline ready for production use!
+The project now has enterprise-grade development tooling and CI pipeline ready for production use!

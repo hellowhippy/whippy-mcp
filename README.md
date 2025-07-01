@@ -297,7 +297,7 @@ yarn dev              # Start development server
 
 ### GitHub Actions CI/CD
 
-The project includes a comprehensive CI/CD pipeline that:
+The project includes a comprehensive CI pipeline that:
 
 - ✅ Runs on Node.js 18.x and 20.x
 - ✅ Performs type checking
@@ -305,7 +305,6 @@ The project includes a comprehensive CI/CD pipeline that:
 - ✅ Validates code formatting
 - ✅ Checks spelling
 - ✅ Builds the project
-- ✅ Deploys to Vercel (preview for PRs, production for main branch)
 
 ### Adding New Features
 
