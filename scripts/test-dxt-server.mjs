@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 console.log('🧪 Testing DXT MCP Server...');
 
 // Test the compiled server
-const serverPath = join(__dirname, '..', 'dxt-build', 'dxt-index.js');
+const serverPath = join(__dirname, '..', 'dxt-build', 'server', 'dxt-index.js');
 const nodePath = process.execPath;
 
 console.log(`Using Node.js: ${nodePath}`);
@@ -28,7 +28,7 @@ const server = spawn(nodePath, [serverPath], {
 let serverOutput = '';
 let serverError = '';
 let serverStarted = false;
-let testPassed = false;
+let toolsListReceived = false;
 
 // Collect stdout
 server.stdout.on('data', data => {
@@ -41,12 +41,29 @@ server.stdout.on('data', data => {
     output.includes('"protocolVersion":"2024-11-05"') &&
     output.includes('"serverInfo":{"name":"whippy-ai-mcp-dxt"')
   ) {
-    testPassed = true;
     console.log('✅ Server responded with proper MCP initialization!');
+
+    // Send tools/list request after initialization
+    setTimeout(() => {
+      const toolsListMessage = {
+        jsonrpc: '2.0',
+        id: 2,
+        method: 'tools/list',
+        params: {},
+      };
+      console.log('📤 Sending tools/list message...');
+      server.stdin.write(JSON.stringify(toolsListMessage) + '\n');
+    }, 500);
+  }
+
+  // Check if we got a tools/list response
+  if (output.includes('"method":"tools/list"') || output.includes('"result":{"tools"')) {
+    toolsListReceived = true;
+    console.log('✅ Server responded with tools list!');
 
     // Give the server a moment to fully start, then exit gracefully
     setTimeout(() => {
-      console.log('✅ Test PASSED - Server is working correctly!');
+      console.log('✅ Test PASSED - Server is working correctly with tools!');
       server.kill('SIGTERM');
       process.exit(0);
     }, 1000);
@@ -70,7 +87,7 @@ server.stderr.on('data', data => {
 server.on('close', code => {
   console.log(`🔍 Server exited with code: ${code}`);
 
-  if (testPassed) {
+  if (toolsListReceived) {
     console.log('✅ Test PASSED - Server worked correctly and exited gracefully');
     process.exit(0);
   } else if (code === 0) {
@@ -104,12 +121,12 @@ server.stdin.write(JSON.stringify(initMessage) + '\n');
 
 // Fallback timeout - if server doesn't respond within 15 seconds, consider it a failure
 setTimeout(() => {
-  if (!testPassed) {
+  if (!toolsListReceived) {
     console.log('⏰ Test timeout reached, killing server...');
     server.kill('SIGTERM');
 
     if (serverStarted) {
-      console.log("⚠️  Server started but didn't respond to initialization");
+      console.log("⚠️  Server started but didn't respond to tools/list");
     } else {
       console.log('❌ Server failed to start properly');
     }

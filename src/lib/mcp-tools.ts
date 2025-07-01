@@ -56,7 +56,7 @@ const createToolHandler = (toolFunction: (client: WhippyClient, params: any) => 
   };
 };
 
-// Tool definitions
+// Tool definitions - these are safe to export as they don't execute until called
 export const tools = [
   {
     name: 'create_contact',
