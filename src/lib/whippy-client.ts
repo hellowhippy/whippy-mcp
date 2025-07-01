@@ -10,7 +10,7 @@ import {
   WhippyApiResponse,
   PaginatedResponse,
   Analytics,
-} from '../types/whippy.js';
+} from '../types/whippy';
 
 export class WhippyClient {
   private client: AxiosInstance;
