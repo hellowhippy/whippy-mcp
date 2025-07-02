@@ -42,7 +42,7 @@
   "tools": [
     {
       "name": "create_contact",
-      "description": "Create a new contact in Whippy"
+      "description": "Create a new contact in Whippy with full details including address and birth date"
     },
     {
       "name": "get_contact",
@@ -61,16 +61,12 @@
       "description": "Send or schedule an SMS or WhatsApp message via Whippy"
     },
     {
-      "name": "send_messaging_sms",
-      "description": "Send comprehensive SMS with attachments, scheduling, and contact management"
-    },
-    {
       "name": "send_email",
       "description": "Send comprehensive email with attachments, CC/BCC, reply-to, and sender name"
     },
     {
       "name": "create_campaign",
-      "description": "Create a new campaign in Whippy"
+      "description": "Create a new SMS campaign in Whippy with full contact details"
     },
     {
       "name": "get_campaign",
@@ -117,17 +113,17 @@
     {
       "name": "Contact Management",
       "description": "Manage your Whippy contacts",
-      "text": "I can help you manage contacts in Whippy. You can:\n- Create new contacts with names, emails, and phone numbers\n- Get contact details by ID\n- List all contacts with pagination\n- Search contacts by name, email, or phone with full details including tags and notes\n\nWhat would you like to do with your contacts?"
+      "text": "I can help you manage contacts in Whippy. You can:\n- Create new contacts with full details including address and birth date\n- Get contact details by ID\n- List all contacts with pagination\n- Search contacts by name, email, or phone with full details including tags and notes\n\nWhat would you like to do with your contacts?"
     },
     {
       "name": "Send Messages",
-      "description": "Send SMS and email messages",
-      "text": "I can help you send messages through Whippy:\n- Send basic SMS messages to phone numbers\n- Send comprehensive SMS with attachments, scheduling, and contact management\n- Send comprehensive emails with attachments, CC/BCC, reply-to, and sender name\n- All phone numbers are automatically formatted to E.164 format\n\nWhat type of message would you like to send?"
+      "description": "Send SMS, WhatsApp, and email messages",
+      "text": "I can help you send messages through Whippy:\n- Send comprehensive SMS with attachments, scheduling, and contact management\n- Send comprehensive emails with attachments, CC/BCC, reply-to, and sender name\n- All phone numbers are automatically formatted to E.164 format\n\nWhat type of message would you like to send?"
     },
     {
       "name": "Campaign Management",
       "description": "Create and manage marketing campaigns",
-      "text": "I can help you manage marketing campaigns in Whippy:\n- Create new campaigns with messages\n- List all your campaigns\n- Send campaigns to your contacts\n- Get campaign analytics and performance data\n\nWhat would you like to do with your campaigns?"
+      "text": "I can help you manage marketing campaigns in Whippy:\n- Create new SMS campaigns with full contact details and attachments\n- List all your campaigns\n- Send campaigns to your contacts\n- Get campaign analytics and performance data\n\nWhat would you like to do with your campaigns?"
     },
     {
       "name": "Lead Management",

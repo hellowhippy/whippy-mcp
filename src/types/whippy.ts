@@ -54,12 +54,31 @@ export interface Note {
   user: User;
 }
 
+export interface Address {
+  address_line_one?: string;
+  address_line_two?: string;
+  city?: string;
+  country?: string;
+  post_code?: string;
+  state?: string;
+}
+
+export interface BirthDate {
+  day?: number;
+  month?: number;
+  year?: number;
+}
+
 export interface Contact {
   id?: string;
   name?: string;
   email?: string;
   phone?: string;
   external_id?: string;
+  default_channel_id?: string;
+  language?: string;
+  address?: Address;
+  birth_date?: BirthDate;
   state?: string;
   blocked?: boolean;
   created_at?: string;
@@ -78,6 +97,18 @@ export interface ContactSearchParams {
 }
 
 export interface Campaign {
+  id?: string;
+  title: string;
+  body: string;
+  from: string;
+  to: Contact[];
+  attachments?: string[];
+  schedule_at?: string;
+  status?: 'draft' | 'scheduled' | 'sent' | 'failed';
+}
+
+// Legacy campaign interface for backward compatibility
+export interface LegacyCampaign {
   id?: string;
   name: string;
   message: string;

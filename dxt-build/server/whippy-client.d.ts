@@ -17,27 +17,6 @@ export declare class WhippyClient {
     constructor(config: WhippyConfig);
     getOrganization(): Promise<WhippyApiResponse<OrganizationResponse>>;
     validateAuth(): Promise<boolean>;
-    /**
-     * Helper method to handle pagination parameters
-     * @param offset Starting point (0-based)
-     * @param limit Maximum items per page (1-100)
-     * @returns Formatted pagination parameters
-     */
-    private getPaginationParams;
-    /**
-     * Helper method to extract pagination info from response
-     * @param response API response with data and total
-     * @returns Pagination metadata
-     */
-    private getPaginationInfo;
-    /**
-     * Helper method to format phone number to E.164 format
-     * @param phoneNumber Phone number in any format
-     * @param defaultCountry Default country code (e.g., 'US')
-     * @returns E.164 formatted phone number
-     * @throws Error if phone number is invalid
-     */
-    private formatPhoneNumber;
     createContact(contact: Contact): Promise<WhippyApiResponse<Contact>>;
     getContact(contact_id: string): Promise<WhippyApiResponse<Contact>>;
     listContacts(offset?: number, limit?: number): Promise<WhippyApiResponse<PaginatedResponse<Contact>>>;

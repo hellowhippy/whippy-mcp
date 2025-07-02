@@ -113,12 +113,34 @@ const createToolHandler = (toolFunction) => {
 export const tools = [
     {
         name: 'create_contact',
-        description: 'Create a new contact in Whippy',
+        description: 'Create a new contact in Whippy with full details including address and birth date',
         requireUserConfirmation: true,
         schema: {
-            name: z.string().optional(),
-            email: z.string().email().optional(),
-            phone: z.string().optional(),
+            name: z.string().optional().describe('Contact name'),
+            email: z.string().email().optional().describe('Contact email'),
+            phone: z.string().optional().describe('Contact phone number (will be formatted to E.164)'),
+            external_id: z.string().optional().describe('External ID for the contact'),
+            default_channel_id: z.string().optional().describe('Default channel ID for the contact'),
+            language: z.string().optional().describe('Contact language (e.g., "en")'),
+            address: z
+                .object({
+                address_line_one: z.string().optional(),
+                address_line_two: z.string().optional(),
+                city: z.string().optional(),
+                country: z.string().optional(),
+                post_code: z.string().optional(),
+                state: z.string().optional(),
+            })
+                .optional()
+                .describe('Contact address'),
+            birth_date: z
+                .object({
+                day: z.number().min(1).max(31).optional(),
+                month: z.number().min(1).max(12).optional(),
+                year: z.number().optional(),
+            })
+                .optional()
+                .describe('Contact birth date'),
         },
         handler: createToolHandler(async (client, params) => {
             const result = await client.createContact(params);
@@ -195,26 +217,6 @@ export const tools = [
     },
     {
         name: 'send_or_schedule_sms_or_whatsapp',
-        description: 'Send or schedule an SMS or WhatsApp message via Whippy. Phone numbers are automatically formatted to E.164 format. Schedule at is optional and must be in ISO 8601 format. From number must be a valid phone number that supports SMS or WhatsApp in the organization.',
-        requireUserConfirmation: true,
-        schema: {
-            to: z.string().describe('Phone number to send SMS to (will be formatted to E.164)'),
-            message: z.string().describe('SMS message content'),
-            from: z
-                .string()
-                .optional()
-                .describe('Sender phone number (optional, will be formatted to E.164)'),
-        },
-        handler: createToolHandler(async (client, { to, message, from }) => {
-            const result = await client.sendSMS(to, message, from);
-            return {
-                ...result,
-                message: `📱 SMS sent successfully!\n${JSON.stringify(result.data, null, 2)}`,
-            };
-        }),
-    },
-    {
-        name: 'send_messaging_sms',
         description: 'Send a comprehensive SMS message via Whippy Messaging API with support for attachments, scheduling, and contact management. Phone numbers are automatically formatted to E.164 format.',
         requireUserConfirmation: true,
         schema: {
@@ -236,7 +238,7 @@ export const tools = [
             const result = await client.sendMessagingSMS(params);
             return {
                 ...result,
-                message: `📱 Messaging SMS sent successfully!\n\nMessage ID: ${result.data?.id}\nContact ID: ${result.data?.contact_id}\nConversation ID: ${result.data?.conversation_id}\nDelivery Status: ${result.data?.delivery_status}\n\nFull Response:\n${JSON.stringify(result.data, null, 2)}`,
+                message: `📱 Messaging SMS sent successfully!\n\nMessage ID: ${result.data?.id}\nConversation ID: ${result.data?.conversation_id}\nDelivery Status: ${result.data?.delivery_status}\n\nFull Response:\n${JSON.stringify(result.data, null, 2)}`,
             };
         }),
     },
@@ -273,19 +275,59 @@ export const tools = [
     },
     {
         name: 'create_campaign',
-        description: 'Create a new campaign in Whippy',
+        description: 'Create a new SMS campaign in Whippy with full contact details',
         requireUserConfirmation: true,
         schema: {
-            name: z.string().describe('Campaign name'),
-            message: z.string().describe('Campaign message content'),
-            contact_ids: z.array(z.string()).optional().describe('Array of contact IDs to target'),
-            scheduled_at: z.string().optional().describe('Scheduled date (ISO string)'),
+            campaign_name: z.string().describe('Campaign name or title'),
+            body: z.string().describe('Campaign message content'),
+            from: z.string().describe('Phone number to send from (will be formatted to E.164)'),
+            to: z
+                .array(z.object({
+                name: z.string().optional().describe('Contact name'),
+                email: z.string().email().optional().describe('Contact email'),
+                phone: z.string().describe('Contact phone number (will be formatted to E.164)'),
+                external_id: z.string().optional().describe('External ID for the contact'),
+                default_channel_id: z
+                    .string()
+                    .optional()
+                    .describe('Default channel ID for the contact'),
+                language: z.string().optional().describe('Contact language (e.g., "en")'),
+                address: z
+                    .object({
+                    address_line_one: z.string().optional(),
+                    address_line_two: z.string().optional(),
+                    city: z.string().optional(),
+                    country: z.string().optional(),
+                    post_code: z.string().optional(),
+                    state: z.string().optional(),
+                })
+                    .optional()
+                    .describe('Contact address'),
+                birth_date: z
+                    .object({
+                    day: z.number().min(1).max(31).optional(),
+                    month: z.number().min(1).max(12).optional(),
+                    year: z.number().optional(),
+                })
+                    .optional()
+                    .describe('Contact birth date'),
+            }))
+                .describe('Array of contact objects with full details'),
+            attachments: z.array(z.string()).optional().describe('Array of attachment URLs'),
+            schedule_at: z.string().optional().describe('Scheduled date (ISO 8601 format)'),
         },
-        handler: createToolHandler(async (client, { name, message, contact_ids, scheduled_at }) => {
-            const result = await client.createCampaign({ name, message, contact_ids, scheduled_at });
+        handler: createToolHandler(async (client, { campaign_name, body, from, to, attachments, schedule_at }) => {
+            const result = await client.createCampaign({
+                title: campaign_name,
+                body,
+                from,
+                to,
+                attachments,
+                schedule_at,
+            });
             return {
                 ...result,
-                message: `🚀 Campaign created successfully!\n${JSON.stringify(result.data, null, 2)}`,
+                message: `🚀 SMS Campaign created successfully!\n${JSON.stringify(result.data, null, 2)}`,
             };
         }),
     },
@@ -293,10 +335,10 @@ export const tools = [
         name: 'get_campaign',
         description: 'Get a campaign by ID from Whippy',
         schema: {
-            campaignId: z.string().describe('The ID of the campaign to retrieve'),
+            campaign_id: z.string().describe('The ID of the campaign to retrieve'),
         },
-        handler: createToolHandler(async (client, { campaignId }) => {
-            const result = await client.getCampaign(campaignId);
+        handler: createToolHandler(async (client, { campaign_id }) => {
+            const result = await client.getCampaign(campaign_id);
             return {
                 ...result,
                 message: `📊 Campaign Details:\n${JSON.stringify(result.data, null, 2)}`,
@@ -320,10 +362,10 @@ export const tools = [
         description: 'Send a campaign immediately via Whippy',
         requireUserConfirmation: true,
         schema: {
-            campaignId: z.string().describe('The ID of the campaign to send'),
+            campaign_id: z.string().describe('The ID of the campaign to send'),
         },
-        handler: createToolHandler(async (client, { campaignId }) => {
-            const result = await client.sendCampaign(campaignId);
+        handler: createToolHandler(async (client, { campaign_id }) => {
+            const result = await client.sendCampaign(campaign_id);
             return {
                 ...result,
                 message: `🚀 Campaign sent successfully!\n${result.message}`,

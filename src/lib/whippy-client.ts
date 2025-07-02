@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 import {
   WhippyConfig,
   Contact,
@@ -106,71 +105,6 @@ export class WhippyClient {
     }
   }
 
-  /**
-   * Helper method to handle pagination parameters
-   * @param offset Starting point (0-based)
-   * @param limit Maximum items per page (1-100)
-   * @returns Formatted pagination parameters
-   */
-  private getPaginationParams(offset: number = 0, limit: number = 50) {
-    return {
-      offset: Math.max(0, offset),
-      limit: Math.min(100, Math.max(1, limit)),
-    };
-  }
-
-  /**
-   * Helper method to extract pagination info from response
-   * @param response API response with data and total
-   * @returns Pagination metadata
-   */
-  private getPaginationInfo(response: any) {
-    return {
-      total: response.total || 0,
-      hasMore: response.total > (response.data?.length || 0),
-      currentPage: Math.floor((response.offset || 0) / (response.limit || 50)) + 1,
-      totalPages: Math.ceil((response.total || 0) / (response.limit || 50)),
-    };
-  }
-
-  /**
-   * Helper method to format phone number to E.164 format
-   * @param phoneNumber Phone number in any format
-   * @param defaultCountry Default country code (e.g., 'US')
-   * @returns E.164 formatted phone number
-   * @throws Error if phone number is invalid
-   */
-  private formatPhoneNumber(phoneNumber: string, defaultCountry: string = 'US'): string {
-    if (!phoneNumber) {
-      throw new Error('Phone number is required');
-    }
-
-    // Remove any non-digit characters except + for E.164 numbers
-    const cleanNumber = phoneNumber.replace(/[^\d+]/g, '');
-
-    try {
-      // If it already starts with +, assume it's E.164
-      if (cleanNumber.startsWith('+')) {
-        if (!isValidPhoneNumber(cleanNumber)) {
-          throw new Error(`Invalid E.164 phone number: ${phoneNumber}`);
-        }
-        return cleanNumber;
-      }
-
-      // Parse and format the phone number
-      const parsed = parsePhoneNumber(cleanNumber, defaultCountry as any);
-      if (!parsed || !isValidPhoneNumber(parsed.number)) {
-        throw new Error(`Invalid phone number: ${phoneNumber}`);
-      }
-
-      return parsed.format('E.164');
-    } catch (error) {
-      throw new Error(
-        `Failed to format phone number "${phoneNumber}": ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    }
-  }
-
   // Contact Management
   async createContact(contact: Contact): Promise<WhippyApiResponse<Contact>> {
     try {
@@ -243,7 +177,7 @@ export class WhippyClient {
   // Campaign Management
   async createCampaign(campaign: Campaign): Promise<WhippyApiResponse<Campaign>> {
     try {
-      const response: AxiosResponse = await this.client.post('/campaigns', campaign);
+      const response: AxiosResponse = await this.client.post('/campaigns/sms', campaign);
       return { success: true, data: response.data };
     } catch (error: any) {
       return { success: false, error: error.message };
@@ -280,11 +214,7 @@ export class WhippyClient {
   // Messaging
   async sendSMS(to: string, message: string, from?: string): Promise<WhippyApiResponse<Message>> {
     try {
-      // Format phone numbers to E.164
-      const formattedTo = this.formatPhoneNumber(to);
-      const formattedFrom = from ? this.formatPhoneNumber(from) : undefined;
-
-      const payload = { to: formattedTo, message, from: formattedFrom };
+      const payload = { to, message, from };
       const response: AxiosResponse = await this.client.post('/messages/sms', payload);
       return { success: true, data: response.data };
     } catch (error: any) {
@@ -296,14 +226,7 @@ export class WhippyClient {
     params: SmsMessageRequest
   ): Promise<WhippyApiResponse<SmsMessageResponse>> {
     try {
-      // Format phone numbers to E.164
-      const formattedParams = {
-        ...params,
-        to: this.formatPhoneNumber(params.to),
-        from: this.formatPhoneNumber(params.from),
-      };
-
-      const response: AxiosResponse = await this.client.post('/messaging/sms', formattedParams);
+      const response: AxiosResponse = await this.client.post('/messaging/sms', params);
       return { success: true, data: response.data };
     } catch (error: any) {
       const errorData = error.response?.data as WhippyApiError;
@@ -501,17 +424,7 @@ export class WhippyClient {
     params: AgentCallRequest
   ): Promise<WhippyApiResponse<AgentCallResponse>> {
     try {
-      // Format phone numbers to E.164
-      const formattedParams = {
-        ...params,
-        from: this.formatPhoneNumber(params.from),
-        to: this.formatPhoneNumber(params.to),
-      };
-
-      const response: AxiosResponse = await this.client.post(
-        `/agents/${agent_id}/call`,
-        formattedParams
-      );
+      const response: AxiosResponse = await this.client.post(`/agents/${agent_id}/call`, params);
       return { success: true, data: response.data };
     } catch (error: any) {
       const errorData = error.response?.data as WhippyApiError;
