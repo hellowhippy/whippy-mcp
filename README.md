@@ -109,6 +109,7 @@ Your MCP server will be available at: `https://your-project.vercel.app`
 ### Installation
 
 1. **Build the DXT package**:
+
    ```bash
    chmod +x build-dxt.sh
    ./build-dxt.sh
@@ -124,6 +125,7 @@ Your MCP server will be available at: `https://your-project.vercel.app`
 ### DXT Configuration
 
 The extension will prompt you to configure:
+
 - **Whippy API Key**: Your Whippy AI API key
 - **Base URL**: Whippy API base URL (optional, defaults to production)
 
@@ -225,20 +227,20 @@ Create a new lead with name Sarah Johnson, email sarah@example.com, source "webs
 
 ## 🔧 Available Tools
 
-| Tool                     | Description                        | Parameters                                            |
-| ------------------------ | ---------------------------------- | ----------------------------------------------------- |
-| `create_contact`         | Create a new contact               | name, email, phone                                    |
-| `get_contact`            | Get contact by ID                  | contact_id                                            |
-| `list_contacts`          | List contacts with pagination      | offset, limit                                         |
-| `send_sms`               | Send SMS message                   | to, message, from                                     |
-| `send_email`             | Send email                         | to, subject, message, from                            |
-| `create_campaign`        | Create new campaign                | name, message, contact_ids, scheduled_at              |
-| `list_campaigns`         | List all campaigns                 | -                                                     |
-| `send_campaign`          | Send campaign immediately          | campaign_id                                           |
-| `create_lead`            | Create new lead                    | name, email, phone, source, status                    |
-| `list_conversations`     | List conversations with pagination | offset, limit                                         |
-| `get_conversation`       | Get conversation by ID             | conversation_id                                       |
-| `get_campaign_analytics` | Get campaign analytics             | campaign_id                                           |
+| Tool                     | Description                        | Parameters                               |
+| ------------------------ | ---------------------------------- | ---------------------------------------- |
+| `create_contact`         | Create a new contact               | name, email, phone                       |
+| `get_contact`            | Get contact by ID                  | contact_id                               |
+| `list_contacts`          | List contacts with pagination      | offset, limit                            |
+| `send_sms`               | Send SMS message                   | to, message, from                        |
+| `send_email`             | Send email                         | to, subject, message, from               |
+| `create_campaign`        | Create new campaign                | name, message, contact_ids, scheduled_at |
+| `list_campaigns`         | List all campaigns                 | -                                        |
+| `send_campaign`          | Send campaign immediately          | campaign_id                              |
+| `create_lead`            | Create new lead                    | name, email, phone, source, status       |
+| `list_conversations`     | List conversations with pagination | offset, limit                            |
+| `get_conversation`       | Get conversation by ID             | conversation_id                          |
+| `get_campaign_analytics` | Get campaign analytics             | campaign_id                              |
 
 ## 🔒 Security
 
@@ -348,6 +350,7 @@ The project includes a comprehensive CI pipeline that:
 ### Code Organization
 
 The project has been refactored to eliminate code duplication:
+
 - **Centralized Tools**: All MCP tools are defined in `src/lib/mcp-tools.ts`
 - **Shared Logic**: Both Vercel deployment and DXT extension use the same tool definitions
 - **TypeScript Only**: Removed JavaScript duplicates for cleaner maintenance

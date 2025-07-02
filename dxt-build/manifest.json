@@ -3,8 +3,8 @@
   "name": "whippy-ai-mcp-dxt",
   "display_name": "Whippy AI MCP Extension",
   "version": "1.0.0",
-  "description": "Connect Claude Desktop to Whippy AI for contact management, messaging, and campaign automation",
-  "long_description": "This extension provides Claude Desktop with access to Whippy AI's powerful contact management, messaging, and campaign automation features. You can create and manage contacts, send SMS and email messages, create marketing campaigns, track leads, and analyze performance - all through natural language conversations with Claude.",
+  "description": "Connect Claude Desktop to Whippy AI for contact management, messaging, campaign automation, and AI voice agents",
+  "long_description": "This extension provides Claude Desktop with access to Whippy AI's powerful contact management, messaging, campaign automation, and AI voice agent features. You can create and manage contacts, send SMS and email messages, create marketing campaigns, track leads, analyze performance, manage AI voice agents, and initiate AI-powered phone calls - all through natural language conversations with Claude.",
   "author": {
     "name": "Jack Kennedy",
     "email": "jack@whippy.co"
@@ -53,12 +53,20 @@
       "description": "List contacts from Whippy with pagination"
     },
     {
-      "name": "send_sms",
-      "description": "Send an SMS message via Whippy"
+      "name": "search_contacts",
+      "description": "Search contacts by name, email, or phone with full contact details"
+    },
+    {
+      "name": "send_or_schedule_sms_or_whatsapp",
+      "description": "Send or schedule an SMS or WhatsApp message via Whippy"
+    },
+    {
+      "name": "send_messaging_sms",
+      "description": "Send comprehensive SMS with attachments, scheduling, and contact management"
     },
     {
       "name": "send_email",
-      "description": "Send an email message via Whippy"
+      "description": "Send comprehensive email with attachments, CC/BCC, reply-to, and sender name"
     },
     {
       "name": "create_campaign",
@@ -74,7 +82,7 @@
     },
     {
       "name": "send_campaign",
-      "description": "Send a campaign via Whippy"
+      "description": "Send a campaign immediately via Whippy"
     },
     {
       "name": "create_lead",
@@ -91,18 +99,30 @@
     {
       "name": "get_campaign_analytics",
       "description": "Get analytics for a specific campaign"
+    },
+    {
+      "name": "list_agents",
+      "description": "List AI voice agents with voice settings and LLM configuration"
+    },
+    {
+      "name": "get_agent",
+      "description": "Get a specific AI agent by ID with full details"
+    },
+    {
+      "name": "initiate_agent_call",
+      "description": "Initiate an outbound call with an AI voice agent"
     }
   ],
   "prompts": [
     {
       "name": "Contact Management",
       "description": "Manage your Whippy contacts",
-      "text": "I can help you manage contacts in Whippy. You can:\n- Create new contacts with names, emails, and phone numbers\n- Get contact details by ID\n- List all contacts with pagination\n\nWhat would you like to do with your contacts?"
+      "text": "I can help you manage contacts in Whippy. You can:\n- Create new contacts with names, emails, and phone numbers\n- Get contact details by ID\n- List all contacts with pagination\n- Search contacts by name, email, or phone with full details including tags and notes\n\nWhat would you like to do with your contacts?"
     },
     {
       "name": "Send Messages",
       "description": "Send SMS and email messages",
-      "text": "I can help you send messages through Whippy:\n- Send SMS messages to phone numbers\n- Send emails with subjects and content\n\nWhat type of message would you like to send?"
+      "text": "I can help you send messages through Whippy:\n- Send basic SMS messages to phone numbers\n- Send comprehensive SMS with attachments, scheduling, and contact management\n- Send comprehensive emails with attachments, CC/BCC, reply-to, and sender name\n- All phone numbers are automatically formatted to E.164 format\n\nWhat type of message would you like to send?"
     },
     {
       "name": "Campaign Management",
@@ -123,12 +143,17 @@
       "name": "Analytics & Reporting",
       "description": "Get insights into your Whippy performance",
       "text": "I can help you analyze your Whippy performance:\n- Get campaign analytics and metrics\n- Track delivery rates and engagement\n- Monitor overall account performance\n\nWhat analytics would you like to see?"
+    },
+    {
+      "name": "AI Voice Agents",
+      "description": "Manage AI voice agents and initiate calls",
+      "text": "I can help you manage AI voice agents in Whippy:\n- List all AI agents with voice settings and LLM configuration\n- Get detailed agent information including provider settings\n- Initiate outbound calls with AI agents\n- Pass custom data to agents during calls\n\nWhat would you like to do with your AI agents?"
     }
   ],
-  "keywords": ["whippy", "crm", "messaging", "automation", "contacts", "campaigns"],
+  "keywords": ["whippy", "crm", "messaging", "automation", "contacts", "campaigns", "ai", "voice", "agents"],
   "requirements": {
     "claude_desktop": ">=1.0.0",
     "node": ">=20.0.0",
     "os": "macos"
   }
-} 
+}
